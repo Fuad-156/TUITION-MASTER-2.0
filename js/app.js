@@ -25,6 +25,9 @@
     language: localStorage.getItem("tm_language") || "en"
   };
 
+  // This project owner email is always treated as Admin in the UI.
+  const PERMANENT_ADMIN_EMAILS = ["skfuad502@gmail.com"];
+
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const fmtMoney = (value = 0) => `৳${Number(value || 0).toLocaleString("en-BD")}`;
@@ -32,6 +35,22 @@
   const initials = (name = "TM") => name.trim().split(/\s+/).slice(0, 2).map(part => part[0]?.toUpperCase()).join("") || "TM";
   const csvToArray = (value = "") => value.split(",").map(item => item.trim()).filter(Boolean);
   const safeText = (value) => String(value ?? "").replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
+  const configuredAdminEmails = () => [...PERMANENT_ADMIN_EMAILS, ...(State.config.adminEmails || [])]
+    .map(item => String(item || "").trim().toLowerCase())
+    .filter(Boolean);
+  const isAdminEmail = (email) => configuredAdminEmails().includes(String(email || "").trim().toLowerCase());
+
+  function ensureRoleOption(select, value, label, disabled = false) {
+    if (!select) return;
+    let option = select.querySelector(`option[value="${value}"]`);
+    if (!option) {
+      option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      select.appendChild(option);
+    }
+    option.disabled = disabled;
+  }
 
   document.addEventListener("DOMContentLoaded", init);
 
@@ -193,6 +212,14 @@
 
     if (error && error.code !== "PGRST116") toast(error.message, "error");
     State.profile = data || null;
+
+    // Keep the project owner account permanently approved as admin.
+    if (isAdminEmail(State.user.email) && State.profile?.role !== "admin") {
+      const adminPatch = { role: "admin", status: "approved", verified: true, updated_at: new Date().toISOString() };
+      const { error: adminError } = await State.client.from("profiles").update(adminPatch).eq("id", State.user.id);
+      if (!adminError) State.profile = { ...State.profile, ...adminPatch };
+    }
+
     await loadRequests();
     await loadSchedules();
     await loadAttendance();
@@ -208,7 +235,8 @@
 
     const name = State.profile?.full_name || State.user?.email || "Guest";
     $("#profileName").textContent = name;
-    $("#profileRole").textContent = State.profile ? `${capitalize(State.profile.role)} • ${State.profile.district || "No district"}` : "Login to manage your profile";
+    const roleLabel = isAdmin() ? "Admin" : capitalize(State.profile?.role || "guest");
+    $("#profileRole").textContent = State.profile ? `${roleLabel} • ${State.profile.district || "No district"}` : "Login to manage your profile";
     $("#profileAvatar").textContent = initials(name);
     $("#profileStatus").textContent = State.profile?.status || "Not connected";
     $("#profileStatus").className = `pill ${State.profile?.status === "approved" ? "success" : State.profile?.status === "rejected" ? "danger" : "warning"}`;
@@ -218,8 +246,7 @@
 
   function isAdmin() {
     const email = State.user?.email?.toLowerCase();
-    const configAdmin = State.config.adminEmails?.map(item => item.toLowerCase()) || [];
-    return Boolean(email && (configAdmin.includes(email) || State.profile?.role === "admin"));
+    return Boolean(email && (isAdminEmail(email) || State.profile?.role === "admin"));
   }
 
   function openAuth(mode = "login") {
@@ -248,7 +275,7 @@
     try {
       if (State.authMode === "signup") {
         const fullName = form.get("full_name")?.trim() || email.split("@")[0];
-        const role = form.get("role") || "student";
+        const role = isAdminEmail(email) ? "admin" : (form.get("role") || "student");
         const { data, error } = await State.client.auth.signUp({
           email,
           password,
@@ -265,7 +292,11 @@
             verified: role !== "teacher"
           });
         }
-        toast("Account created. Email confirmation enabled থাকলে inbox check করো।", "success");
+        if (data.session) {
+          toast("Account created and logged in.", "success");
+        } else {
+          toast("Account created. Email confirmation ON থাকলে inbox থেকে confirm করে login করো।", "success");
+        }
       } else {
         const { error } = await State.client.auth.signInWithPassword({ email, password });
         if (error) throw error;
@@ -302,20 +333,44 @@
     const form = $("#profileForm");
     if (!form) return;
     const profile = State.profile || {};
+    const adminAccount = isAdmin();
+
     form.email.value = State.user?.email || "";
-    ["full_name", "phone", "role", "district", "upazila", "fee_monthly", "experience_years", "qualification", "availability", "bio"].forEach(key => {
-      if (form[key]) form[key].value = profile[key] ?? (key === "role" ? "student" : "");
+
+    if (form.role) {
+      if (adminAccount) {
+        ensureRoleOption(form.role, "admin", "Admin");
+        form.role.value = "admin";
+        form.role.disabled = true;
+      } else {
+        const adminOption = form.role.querySelector('option[value="admin"]');
+        if (adminOption) adminOption.remove();
+        form.role.disabled = false;
+      }
+    }
+
+    ["full_name", "phone", "district", "upazila", "fee_monthly", "experience_years", "qualification", "availability", "bio"].forEach(key => {
+      if (form[key]) form[key].value = profile[key] ?? "";
     });
+    if (form.role && !adminAccount) form.role.value = profile.role ?? "student";
+
     form.subjects.value = Array.isArray(profile.subjects) ? profile.subjects.join(", ") : "";
     form.class_levels.value = Array.isArray(profile.class_levels) ? profile.class_levels.join(", ") : "";
-    $("#approvalHint").textContent = profile.role === "teacher" ? `Teacher account: ${profile.status || "pending"}` : "Student profiles are active by default";
+
+    if (adminAccount) {
+      $("#approvalHint").textContent = "Admin account: approved";
+      $("#approvalHint").className = "pill success";
+    } else {
+      $("#approvalHint").textContent = profile.role === "teacher" ? `Teacher account: ${profile.status || "pending"}` : "Student profiles are active by default";
+      $("#approvalHint").className = `pill ${profile.role === "teacher" && profile.status !== "approved" ? "warning" : "success"}`;
+    }
   }
 
   async function saveProfile(event) {
     event.preventDefault();
     if (!requireClient() || !requireUser()) return;
     const form = new FormData(event.currentTarget);
-    const role = form.get("role");
+    const role = isAdmin() ? "admin" : (form.get("role") || "student");
     const currentStatus = State.profile?.status;
     const payload = {
       id: State.user.id,
