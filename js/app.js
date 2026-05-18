@@ -240,7 +240,8 @@
     event.preventDefault();
     if (!requireClient()) return;
 
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const email = form.get("email")?.trim();
     const password = form.get("password");
 
@@ -271,7 +272,7 @@
         toast("Login successful.", "success");
       }
       $("#authModal")?.close();
-      event.currentTarget.reset();
+      formEl?.reset();
     } catch (error) {
       toast(error.message || "Authentication failed.", "error");
     }
@@ -448,7 +449,8 @@
   async function submitTeacherRequest(event) {
     event.preventDefault();
     if (!requireClient() || !requireUser()) return;
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const teacherId = form.get("teacher_id");
     const teacher = State.teachers.find(item => item.id === teacherId) || {};
     const monthlyFee = Number(teacher.fee_monthly || 0);
@@ -484,7 +486,7 @@
     }
 
     $("#requestModal")?.close();
-    event.currentTarget.reset();
+    formEl?.reset();
     await loadRequests();
     toast("Request submitted. Admin payment verify করলে request active হবে।", "success");
   }
@@ -590,7 +592,8 @@
   async function saveSchedule(event) {
     event.preventDefault();
     if (!requireClient() || !requireUser()) return;
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const active = State.requests[0];
     const payload = {
       request_id: active?.id || null,
@@ -603,7 +606,7 @@
     };
     const { error } = await State.client.from("schedules").insert(payload);
     if (error) return toast(error.message, "error");
-    event.currentTarget.reset();
+    formEl?.reset();
     await loadSchedules();
     toast("Schedule added.", "success");
   }
@@ -628,7 +631,8 @@
   async function saveAttendance(event) {
     event.preventDefault();
     if (!requireClient() || !requireUser()) return;
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const active = State.requests[0];
     const payload = {
       request_id: active?.id || null,
@@ -640,7 +644,7 @@
     };
     const { error } = await State.client.from("attendance").insert(payload);
     if (error) return toast(error.message, "error");
-    event.currentTarget.reset();
+    formEl?.reset();
     await loadAttendance();
     toast("Attendance saved.", "success");
   }
@@ -661,7 +665,8 @@
   async function uploadMaterial(event) {
     event.preventDefault();
     if (!requireClient() || !requireUser()) return;
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const file = form.get("file");
     if (!file || !file.name) return toast("Upload করার জন্য file select করো।", "error");
 
@@ -680,7 +685,7 @@
       file_type: file.type || "application/octet-stream"
     });
     if (error) return toast(error.message, "error");
-    event.currentTarget.reset();
+    formEl?.reset();
     await loadMaterials();
     toast("Material uploaded.", "success");
   }
