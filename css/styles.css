@@ -282,3 +282,128 @@ th { color: var(--muted); font-size: .82rem; text-transform: uppercase; letter-s
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Option based profile fields */
+select[multiple] { min-height: 138px; padding-block: 10px; }
+select option { background: var(--surface-strong); color: var(--text); }
+.field-note { color: var(--muted); font-weight: 700; font-size: .76rem; line-height: 1.35; }
+
+/* Profile identity and photo upload */
+.profile-avatar,
+.teacher-avatar,
+.profile-photo-preview {
+  overflow: hidden;
+}
+.profile-avatar img,
+.teacher-avatar img,
+.profile-photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.profile-photo-box {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--surface-strong);
+}
+.profile-photo-preview {
+  width: 112px;
+  height: 112px;
+  flex: 0 0 112px;
+  display: grid;
+  place-items: center;
+  border-radius: 32px;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  box-shadow: var(--shadow-soft);
+}
+.photo-upload-label {
+  flex: 1;
+}
+.photo-upload-label input[type="file"] {
+  padding: 10px;
+  cursor: pointer;
+}
+.dob-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+@media (max-width: 760px) {
+  .profile-photo-box {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .profile-photo-preview {
+    margin: 0 auto;
+  }
+  .dob-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Professional signup/profile option UI */
+.auth-modal .auth-card { max-width: 560px; }
+.pro-signup {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-height: 68vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.pro-signup[hidden] { display: none !important; }
+.pro-signup .wide, .role-choice-row.wide { grid-column: 1 / -1; }
+.role-choice-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.choice-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255,255,255,.04);
+  font-weight: 800;
+}
+.choice-card input { position: absolute; opacity: 0; pointer-events: none; }
+.choice-card.selected {
+  border-color: #18d68f;
+  background: rgba(24, 214, 143, .12);
+  color: #dfffee;
+}
+.signup-bkash-box {
+  border: 1px solid rgba(255, 198, 75, .55);
+  background: rgba(255, 236, 179, .95);
+  color: #2b2108;
+  border-radius: 16px;
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+}
+.signup-bkash-box input {
+  background: white !important;
+  color: #111827 !important;
+}
+.bkash-number {
+  display: block;
+  text-align: center;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+@media (max-width: 640px) {
+  .pro-signup { grid-template-columns: 1fr; max-height: 76vh; }
+  .role-choice-row { grid-template-columns: 1fr 1fr; }
+}

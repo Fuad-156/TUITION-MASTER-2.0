@@ -108,11 +108,11 @@
         <div class="filter-panel reveal delay-1">
           <label>
             Subject
-            <input id="filterSubject" type="search" placeholder="Physics, Math, English..." />
+            <select id="filterSubject"><option value="">Any subject</option></select>
           </label>
           <label>
             District
-            <input id="filterDistrict" type="search" placeholder="Dhaka, Chattogram..." />
+            <select id="filterDistrict"><option value="">Any district</option></select>
           </label>
           <label>
             Class level
@@ -157,19 +157,38 @@
                 <span class="pill neutral" id="approvalHint">Pending status appears here</span>
               </div>
               <form class="form-grid" id="profileForm">
-                <label>Full name<input name="full_name" required placeholder="Your full name" /></label>
-                <label>Email<input name="email" type="email" readonly placeholder="Login email" /></label>
-                <label>Phone<input name="phone" placeholder="01XXXXXXXXX" /></label>
-                <label>Role<select name="role" required><option value="student">Student</option><option value="teacher">Teacher</option></select></label>
-                <label>District<input name="district" placeholder="Dhaka" /></label>
-                <label>Upazila / Area<input name="upazila" placeholder="Mirpur" /></label>
-                <label>Subjects<input name="subjects" placeholder="Physics, Math, English" /></label>
-                <label>Class levels<input name="class_levels" placeholder="SSC, HSC, Admission" /></label>
-                <label>Monthly fee (৳)<input name="fee_monthly" type="number" min="0" placeholder="5000" /></label>
-                <label>Experience years<input name="experience_years" type="number" min="0" placeholder="3" /></label>
-                <label class="wide">Qualification<input name="qualification" placeholder="BSc in CSE, Dhaka University" /></label>
-                <label class="wide">Availability<input name="availability" placeholder="Fri-Sat evening, weekday night" /></label>
-                <label class="wide">Bio<textarea name="bio" rows="4" placeholder="Write a short professional bio..."></textarea></label>
+                <div class="profile-photo-box wide">
+                  <div class="profile-photo-preview" id="profilePhotoPreview"><span>TM</span></div>
+                  <label class="photo-upload-label">Profile picture / প্রোফাইল ছবি
+                    <input name="profile_photo" type="file" accept="image/*" />
+                    <small class="field-note">JPG/PNG/WebP image upload করা যাবে। Maximum size: 100 MB.</small>
+                  </label>
+                </div>
+                <label>Full name / পূর্ণ নাম<input name="full_name" required placeholder="Your full name" /></label>
+                <label>Email / ইমেইল<input name="email" type="email" readonly placeholder="Login email" /></label>
+                <label>Mobile / মোবাইল<input name="phone" placeholder="01XXXXXXXXX" /></label>
+                <label>Role / ভূমিকা<select name="role" required><option value="student">Student</option><option value="teacher">Teacher</option><option value="admin" disabled>Admin</option></select></label>
+                <label>Gender / লিঙ্গ<select name="gender" id="profileGender" required><option value="">Choose gender</option><option value="male">👨 Male / পুরুষ</option><option value="female">👩 Female / মহিলা</option><option value="other">Other / অন্যান্য</option></select></label>
+                <label>Blood group / রক্তের গ্রুপ<select name="blood_group" id="profileBloodGroup"><option value="">Choose blood group</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></label>
+                <label>Institution / প্রতিষ্ঠান<input name="institution" placeholder="School / College / University" /></label>
+                <label>Graduation status / শিক্ষার অবস্থা<select name="graduation_status" id="profileGraduationStatus"><option value="">Choose status</option><option>Graduated</option><option>Studying</option><option>Completed</option><option>Running</option></select></label>
+                <label class="wide">Date of birth / জন্মতারিখ
+                  <div class="dob-row">
+                    <select name="dob_day" id="profileDobDay"><option value="">Day</option></select>
+                    <select name="dob_month" id="profileDobMonth"><option value="">Month</option></select>
+                    <select name="dob_year" id="profileDobYear"><option value="">Year</option></select>
+                  </div>
+                </label>
+                <label>Division / বিভাগ<select name="division" id="profileDivision" required></select></label>
+                <label>District / জেলা<select name="district" id="profileDistrict" required></select></label>
+                <label>Upazila / Area / উপজেলা<select name="upazila" id="profileUpazila" required></select></label>
+                <label>Subjects / বিষয়<select name="subjects" id="profileSubjects" multiple required></select><small class="field-note">Mobile: tap multiple subjects. PC: Ctrl ধরে multiple select.</small></label>
+                <label>Class levels / শ্রেণি<select name="class_levels" id="profileClassLevels" multiple required></select><small class="field-note">এক বা একাধিক class level choose করো।</small></label>
+                <label>Monthly fee (৳) / মাসিক ফি<select name="fee_monthly" id="profileFee" required></select></label>
+                <label>Experience years / অভিজ্ঞতা<select name="experience_years" id="profileExperience" required></select></label>
+                <label class="wide">Qualification / যোগ্যতা<select name="qualification" id="profileQualification" required></select></label>
+                <label class="wide">Availability / সময়<select name="availability" id="profileAvailability" multiple required></select><small class="field-note">Available time slots choose করো।</small></label>
+                <label class="wide">Bio / পরিচিতি<textarea name="bio" rows="4" placeholder="Write a short professional bio..."></textarea></label>
                 <button class="btn btn-primary wide" type="submit">Save Profile</button>
               </form>
             </section>
@@ -209,7 +228,7 @@
               <div class="panel-head"><div><h2>Study Materials</h2><p>Upload notes, PDFs, worksheets, or resources for students.</p></div></div>
               <form class="form-grid compact" id="materialForm">
                 <label>Title<input name="title" required placeholder="Chapter 5 Notes" /></label>
-                <label>Subject<input name="subject" placeholder="Physics" /></label>
+                <label>Subject<select name="subject" id="materialSubject"></select></label>
                 <label class="wide">File<input name="file" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.txt" /></label>
                 <button class="btn btn-primary wide" type="submit">Upload Material</button>
               </form>
@@ -260,18 +279,54 @@
 
   <dialog class="auth-modal" id="authModal">
     <form method="dialog" class="auth-card" id="authForm">
-      <button class="close-btn" value="cancel" aria-label="Close">×</button>
+      <button class="close-btn" type="button" id="authCloseBtn" aria-label="Close">×</button>
       <div class="auth-tabs">
         <button type="button" class="active" data-auth-mode="login">Login</button>
         <button type="button" data-auth-mode="signup">Signup</button>
       </div>
       <h2 id="authTitle">Welcome back</h2>
       <p id="authSubtitle">Login to manage requests, chat, and profile.</p>
-      <label>Email<input name="email" type="email" required placeholder="you@example.com" /></label>
-      <label>Password<input name="password" type="password" required minlength="6" placeholder="Minimum 6 characters" /></label>
-      <div class="signup-fields" id="signupFields" hidden>
-        <label>Full name<input name="full_name" placeholder="Your name" /></label>
-        <label>Role<select name="role"><option value="student">Student</option><option value="teacher">Teacher</option></select></label>
+      <div class="login-only-fields" id="loginFields">
+        <label>Email<input name="email" type="email" required placeholder="you@example.com" /></label>
+        <label>Password<input name="password" type="password" required minlength="6" placeholder="Minimum 6 characters" /></label>
+      </div>
+      <div class="signup-fields pro-signup" id="signupFields" hidden>
+        <div class="role-choice-row wide" aria-label="Choose account type">
+          <label class="choice-card selected"><input type="radio" name="role" value="student" checked />🎓 Student / শিক্ষার্থী</label>
+          <label class="choice-card"><input type="radio" name="role" value="teacher" />👨‍🏫 Teacher / শিক্ষক</label>
+        </div>
+        <label>Full name / পুরো নাম<input name="full_name" placeholder="Your name / আপনার নাম" /></label>
+        <label>Mobile / মোবাইল<input name="phone" placeholder="01XXXXXXXXX" /></label>
+        <label class="wide">Email / ইমেইল<input name="email_signup" type="email" placeholder="you@gmail.com" /></label>
+        <label>Division / বিভাগ<select name="division" id="signupDivision"></select></label>
+        <label>District / জেলা<select name="district" id="signupDistrict"></select></label>
+        <label class="wide">Upazila / উপজেলা<select name="upazila" id="signupUpazila"></select></label>
+        <div class="role-choice-row wide" aria-label="Choose gender">
+          <label class="choice-card selected"><input type="radio" name="gender" value="male" checked />👨 Male / পুরুষ</label>
+          <label class="choice-card"><input type="radio" name="gender" value="female" />👩 Female / মহিলা</label>
+        </div>
+        <label class="wide">Blood group / রক্তের গ্রুপ<select name="blood_group" id="signupBloodGroup"><option value="">Select / সিলেক্ট দিন</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></label>
+        <label class="wide">Date of birth / জন্মতারিখ
+          <div class="dob-row">
+            <select name="dob_day" id="signupDobDay"><option value="">দিন</option></select>
+            <select name="dob_month" id="signupDobMonth"><option value="">মাস</option></select>
+            <select name="dob_year" id="signupDobYear"><option value="">বছর</option></select>
+          </div>
+        </label>
+        <label class="student-only wide">Your class / আপনার শ্রেণি<select name="student_class" id="signupStudentClass"></select></label>
+        <label class="student-only wide">Institution / শিক্ষা প্রতিষ্ঠান<input name="institution" placeholder="School / College / University name" /></label>
+        <label class="teacher-only wide">Select subject / আপনার বিষয়<select name="subjects" id="signupSubjects" multiple></select><small class="field-note">PC: Ctrl ধরে multiple select করা যাবে।</small></label>
+        <label class="teacher-only">Monthly fee (৳) / মাসিক ফি<select name="fee_monthly" id="signupFee"></select></label>
+        <label class="teacher-only wide">Class range / কোন শ্রেণি পড়াবেন<select name="class_levels" id="signupClassLevels" multiple></select></label>
+        <label class="teacher-only wide">Experience / অভিজ্ঞতা<select name="experience_years" id="signupExperience"></select></label>
+        <label class="teacher-only wide">Qualification / যোগ্যতা<select name="qualification" id="signupQualification"></select></label>
+        <label class="wide">Password / পাসওয়ার্ড<input name="password_signup" type="password" minlength="6" placeholder="Min 6 characters / কমপক্ষে ৬ অক্ষর" /></label>
+        <div class="signup-bkash-box teacher-only wide">
+          <strong>Registration Fee / নিবন্ধন ফি</strong>
+          <small>bKash payment system unchanged আছে। Admin bKash number এ payment করে Transaction ID submit করবে।</small>
+          <span class="bkash-number">📱 <span id="signupBkashNumber">01XXXXXXXXX</span></span>
+          <label>bKash Transaction ID<input name="registration_trx_id" placeholder="e.g. A3B12C345" /></label>
+        </div>
       </div>
       <button class="btn btn-primary full" type="submit" id="authSubmitBtn">Login</button>
       <button class="btn btn-ghost full" type="button" id="resetPasswordBtn">Send password reset email</button>
@@ -280,12 +335,12 @@
 
   <dialog class="request-modal" id="requestModal">
     <form method="dialog" class="auth-card" id="requestForm">
-      <button class="close-btn" value="cancel" aria-label="Close">×</button>
+      <button class="close-btn" type="button" id="requestCloseBtn" aria-label="Close">×</button>
       <h2>Request Teacher</h2>
       <p id="requestTeacherName">Submit request and bKash transaction ID for verification.</p>
       <input type="hidden" name="teacher_id" />
-      <label>Subject<input name="subject" required placeholder="Physics" /></label>
-      <label>Class level<input name="class_level" required placeholder="HSC" /></label>
+      <label>Subject<select name="subject" id="requestSubject" required></select></label>
+      <label>Class level<select name="class_level" id="requestClassLevel" required></select></label>
       <label>Schedule note<textarea name="schedule_note" rows="3" placeholder="Preferred time and location"></textarea></label>
       <label>bKash Transaction ID<input name="bkash_trx_id" placeholder="TXN123456" /></label>
       <button class="btn btn-primary full" type="submit">Submit Request</button>

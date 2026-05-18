@@ -25,6 +25,68 @@
     language: localStorage.getItem("tm_language") || "en"
   };
 
+  // This project owner email is always treated as Admin in the UI.
+  const PERMANENT_ADMIN_EMAILS = ["skfuad502@gmail.com"];
+
+
+  const SUBJECT_OPTIONS = [
+    "Bangla", "English", "Math", "General Math", "Higher Math", "Physics", "Chemistry", "Biology",
+    "ICT", "Accounting", "Finance", "Business Studies", "Economics", "Civics", "History", "Geography",
+    "Islamic Studies", "Science", "Social Science", "Admission Test", "IELTS", "Spoken English", "Arabic", "Quran"
+  ];
+
+  const CLASS_LEVEL_OPTIONS = [
+    "Play", "Nursery", "KG", "Class 1", "Class 2", "Class 3", "Class 4", "Class 5",
+    "Class 6", "Class 7", "Class 8", "Class 9", "Class 10", "SSC", "HSC", "Admission", "University", "IELTS"
+  ];
+
+  const DISTRICT_AREA_OPTIONS = {
+    "Dhaka": ["Mirpur", "Dhanmondi", "Uttara", "Mohammadpur", "Bashundhara", "Gulshan", "Banani", "Badda", "Rampura", "Khilgaon", "Farmgate", "Motijheel", "Wari", "Jatrabari", "Savar", "Keraniganj", "Dohar", "Nawabganj"],
+    "Khulna": ["Khulna Sadar", "Sonadanga", "Khalishpur", "Daulatpur", "Khan Jahan Ali", "Batiaghata", "Dumuria", "Dacope", "Koyra", "Paikgacha", "Rupsa", "Terokhada", "Phultala", "Dighalia"],
+    "Chattogram": ["Agrabad", "GEC", "Nasirabad", "Panchlaish", "Halishahar", "Patenga", "Chawkbazar", "Kotwali", "Sitakunda", "Hathazari", "Raozan", "Patiya", "Boalkhali", "Mirsharai", "Anwara"],
+    "Rajshahi": ["Rajshahi Sadar", "Boalia", "Motihar", "Shaheb Bazar", "Rajpara", "Paba", "Godagari", "Tanore", "Durgapur", "Bagha", "Charghat", "Puthia", "Bagmara", "Mohanpur"],
+    "Sylhet": ["Sylhet Sadar", "Zindabazar", "Ambarkhana", "Shahjalal Upashahar", "Subid Bazar", "South Surma", "Beanibazar", "Golapganj", "Jaintiapur", "Kanaighat", "Companiganj", "Fenchuganj"],
+    "Barishal": ["Barishal Sadar", "Nathullabad", "Rupatali", "Band Road", "Bakerganj", "Babuganj", "Banaripara", "Gournadi", "Agailjhara", "Hizla", "Mehendiganj", "Muladi", "Wazirpur"],
+    "Rangpur": ["Rangpur Sadar", "Medical Mor", "Jahaj Company", "Mithapukur", "Pirgachha", "Badarganj", "Kaunia", "Gangachara", "Taraganj", "Pirganj"],
+    "Mymensingh": ["Mymensingh Sadar", "Ganginarpar", "Maskanda", "Trishal", "Bhaluka", "Muktagacha", "Phulpur", "Gafargaon", "Ishwarganj", "Nandail", "Gouripur", "Haluaghat"],
+    "Cumilla": ["Cumilla Sadar", "Kandirpar", "Kotbari", "Laksam", "Chauddagram", "Daudkandi", "Debidwar", "Burichang", "Chandina", "Homna", "Meghna", "Monohorgonj"],
+    "Jashore": ["Jashore Sadar", "Monihar", "New Market", "Chowgacha", "Jhikargacha", "Keshabpur", "Bagharpara", "Manirampur", "Abhaynagar", "Sharsha"],
+    "Gazipur": ["Gazipur Sadar", "Tongi", "Board Bazar", "Konabari", "Kaliakair", "Kapasia", "Kaliganj", "Sreepur"],
+    "Narayanganj": ["Narayanganj Sadar", "Chashara", "Siddhirganj", "Fatullah", "Bandar", "Rupganj", "Sonargaon", "Araihazar"],
+    "Bogura": ["Bogura Sadar", "Satmatha", "Sherpur", "Shibganj", "Gabtali", "Dhunat", "Sariakandi", "Sonatola", "Kahaloo", "Nandigram"],
+    "Dinajpur": ["Dinajpur Sadar", "Birampur", "Birganj", "Bochaganj", "Chirirbandar", "Fulbari", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Nawabganj", "Parbatipur"],
+    "Kushtia": ["Kushtia Sadar", "Kumarkhali", "Khoksa", "Mirpur", "Daulatpur", "Bheramara"],
+    "Faridpur": ["Faridpur Sadar", "Boalmari", "Alfadanga", "Bhanga", "Charbhadrasan", "Madhukhali", "Nagarkanda", "Sadarpur", "Saltha"],
+    "Noakhali": ["Noakhali Sadar", "Maijdee", "Begumganj", "Chatkhil", "Companyganj", "Hatiya", "Senbagh", "Sonaimuri", "Subarnachar"],
+    "Cox's Bazar": ["Cox's Bazar Sadar", "Chakaria", "Ramu", "Teknaf", "Ukhia", "Maheshkhali", "Kutubdia", "Pekua"],
+    "Other": ["Sadar", "Town Area", "University Area", "College Area", "Residential Area", "Online"]
+  };
+
+  const DIVISION_DISTRICT_OPTIONS = {
+    "Dhaka": ["Dhaka", "Gazipur", "Narayanganj", "Faridpur"],
+    "Khulna": ["Khulna", "Jashore", "Kushtia"],
+    "Chattogram": ["Chattogram", "Cumilla", "Noakhali", "Cox's Bazar"],
+    "Rajshahi": ["Rajshahi", "Bogura"],
+    "Sylhet": ["Sylhet"],
+    "Barishal": ["Barishal"],
+    "Rangpur": ["Rangpur", "Dinajpur"],
+    "Mymensingh": ["Mymensingh"],
+    "Online / Other": ["Other"]
+  };
+
+  const DIVISION_OPTIONS = Object.keys(DIVISION_DISTRICT_OPTIONS);
+
+  const DISTRICT_OPTIONS = [
+    "Dhaka", "Khulna", "Chattogram", "Rajshahi", "Sylhet", "Barishal", "Rangpur", "Mymensingh",
+    "Cumilla", "Jashore", "Gazipur", "Narayanganj", "Bogura", "Dinajpur", "Kushtia", "Faridpur", "Noakhali", "Cox's Bazar", "Other"
+  ];
+
+  const FEE_OPTIONS = [0, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 10000, 12000, 15000, 20000];
+  const EXPERIENCE_OPTIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15];
+  const QUALIFICATION_OPTIONS = ["SSC", "HSC", "Diploma", "BSc", "BA", "BBA", "BSS", "BEd", "MSc", "MA", "MBA", "MEd", "MBBS", "Engineering", "University Student", "Other"];
+  const AVAILABILITY_OPTIONS = ["Morning", "Afternoon", "Evening", "Night", "Weekdays", "Weekends", "Fri-Sat", "Online", "Home Tuition", "Batch Tuition"];
+  const GRADUATION_STATUS_OPTIONS = ["Graduated", "Studying", "Completed", "Running"];
+
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const fmtMoney = (value = 0) => `৳${Number(value || 0).toLocaleString("en-BD")}`;
@@ -32,6 +94,181 @@
   const initials = (name = "TM") => name.trim().split(/\s+/).slice(0, 2).map(part => part[0]?.toUpperCase()).join("") || "TM";
   const csvToArray = (value = "") => value.split(",").map(item => item.trim()).filter(Boolean);
   const safeText = (value) => String(value ?? "").replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
+  const configuredAdminEmails = () => [...PERMANENT_ADMIN_EMAILS, ...(State.config.adminEmails || [])]
+    .map(item => String(item || "").trim().toLowerCase())
+    .filter(Boolean);
+  const isAdminEmail = (email) => configuredAdminEmails().includes(String(email || "").trim().toLowerCase());
+
+  function ensureRoleOption(select, value, label, disabled = false) {
+    if (!select) return;
+    let option = select.querySelector(`option[value="${value}"]`);
+    if (!option) {
+      option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      select.appendChild(option);
+    }
+    option.disabled = disabled;
+  }
+
+  function avatarContent(url, name = "TM") {
+    return url ? `<img src="${safeText(url)}" alt="${safeText(name)} profile picture" loading="lazy" />` : `<span>${safeText(initials(name))}</span>`;
+  }
+
+  function setAvatar(element, url, name = "TM") {
+    if (!element) return;
+    element.innerHTML = avatarContent(url, name);
+  }
+
+  function parseDateParts(dateValue) {
+    if (!dateValue) return { day: "", month: "", year: "" };
+    const [year, month, day] = String(dateValue).split("-");
+    return { day: day || "", month: month || "", year: year || "" };
+  }
+
+  function buildDateFromParts(day, month, year) {
+    if (!day || !month || !year) return null;
+    return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  }
+
+  function populateDobOptions(prefix = "profile", labels = { day: "Day", month: "Month", year: "Year" }) {
+    const currentYear = new Date().getFullYear();
+    fillSelect($(`#${prefix}DobDay`), Array.from({ length: 31 }, (_, index) => String(index + 1)), labels.day || "Day");
+    fillSelect($(`#${prefix}DobMonth`), [
+      ["1", "January"], ["2", "February"], ["3", "March"], ["4", "April"], ["5", "May"], ["6", "June"],
+      ["7", "July"], ["8", "August"], ["9", "September"], ["10", "October"], ["11", "November"], ["12", "December"]
+    ], labels.month || "Month");
+    fillSelect($(`#${prefix}DobYear`), Array.from({ length: 80 }, (_, index) => String(currentYear - index)), labels.year || "Year");
+  }
+
+  function optionHtml(value, label = value) {
+    return `<option value="${safeText(value)}">${safeText(label)}</option>`;
+  }
+
+  function fillSelect(select, options, placeholder = "Choose option") {
+    if (!select) return;
+    const current = select.value;
+    select.innerHTML = optionHtml("", placeholder) + options.map(item => Array.isArray(item) ? optionHtml(item[0], item[1]) : optionHtml(item)).join("");
+    if (current && [...select.options].some(option => option.value === current)) select.value = current;
+  }
+
+  function fillMultiSelect(select, options) {
+    if (!select) return;
+    const current = getSelectValues(select);
+    select.innerHTML = options.map(item => optionHtml(item)).join("");
+    setSelectValues(select, current);
+  }
+
+  function getSelectValues(select) {
+    if (!select) return [];
+    if (select.multiple) return [...select.selectedOptions].map(option => option.value).filter(Boolean);
+    return select.value ? [select.value] : [];
+  }
+
+  function setSelectValues(select, values = []) {
+    if (!select) return;
+    const normalized = Array.isArray(values) ? values.map(String) : csvToArray(String(values || ""));
+    if (select.multiple) {
+      [...select.options].forEach(option => option.selected = normalized.includes(option.value));
+    } else {
+      const first = normalized[0] || "";
+      if (first && ![...select.options].some(option => option.value === first)) {
+        select.insertAdjacentHTML("beforeend", optionHtml(first));
+      }
+      select.value = first;
+    }
+  }
+
+  function getDivisionForDistrict(district) {
+    return DIVISION_OPTIONS.find(division => (DIVISION_DISTRICT_OPTIONS[division] || []).includes(district)) || "Online / Other";
+  }
+
+  function updateDistrictOptions(selectedValue = "") {
+    const divisionSelect = $("#profileDivision");
+    const districtSelect = $("#profileDistrict");
+    if (!districtSelect) return;
+    const division = divisionSelect?.value || "Online / Other";
+    const districts = DIVISION_DISTRICT_OPTIONS[division] || DISTRICT_OPTIONS;
+    fillSelect(districtSelect, districts, "Choose district");
+    if (selectedValue) setSelectValues(districtSelect, [selectedValue]);
+    updateUpazilaOptions();
+  }
+
+  function updateUpazilaOptions(selectedValue = "") {
+    const districtSelect = $("#profileDistrict");
+    const upazilaSelect = $("#profileUpazila");
+    if (!upazilaSelect) return;
+    const district = districtSelect?.value || "Other";
+    const areas = DISTRICT_AREA_OPTIONS[district] || DISTRICT_AREA_OPTIONS.Other;
+    fillSelect(upazilaSelect, areas, "Choose area / upazila");
+    if (selectedValue) setSelectValues(upazilaSelect, [selectedValue]);
+  }
+
+
+  function updateSignupDistrictOptions(selectedValue = "") {
+    const divisionSelect = $("#signupDivision");
+    const districtSelect = $("#signupDistrict");
+    if (!districtSelect) return;
+    const division = divisionSelect?.value || "Online / Other";
+    const districts = DIVISION_DISTRICT_OPTIONS[division] || DISTRICT_OPTIONS;
+    fillSelect(districtSelect, districts, "Select District");
+    if (selectedValue) setSelectValues(districtSelect, [selectedValue]);
+    updateSignupUpazilaOptions();
+  }
+
+  function updateSignupUpazilaOptions(selectedValue = "") {
+    const districtSelect = $("#signupDistrict");
+    const upazilaSelect = $("#signupUpazila");
+    if (!upazilaSelect) return;
+    const district = districtSelect?.value || "Other";
+    const areas = DISTRICT_AREA_OPTIONS[district] || DISTRICT_AREA_OPTIONS.Other;
+    fillSelect(upazilaSelect, areas, "Select Upazila");
+    if (selectedValue) setSelectValues(upazilaSelect, [selectedValue]);
+  }
+
+  function syncChoiceCards(root = document) {
+    $$(".choice-card", root).forEach(card => {
+      const input = card.querySelector("input");
+      card.classList.toggle("selected", Boolean(input?.checked));
+    });
+  }
+
+  function updateSignupRoleFields() {
+    const role = $("#authForm input[name=role]:checked")?.value || "student";
+    $$(".student-only").forEach(el => el.hidden = role !== "student");
+    $$(".teacher-only").forEach(el => el.hidden = role !== "teacher");
+    syncChoiceCards($("#authForm"));
+  }
+
+  function populateOptionFields() {
+    fillSelect($("#filterSubject"), SUBJECT_OPTIONS, "Any subject");
+    fillSelect($("#filterDistrict"), DISTRICT_OPTIONS, "Any district");
+    fillSelect($("#filterClass"), CLASS_LEVEL_OPTIONS, "Any class");
+    fillSelect($("#profileDivision"), DIVISION_OPTIONS, "Choose division");
+    fillSelect($("#signupDivision"), DIVISION_OPTIONS, "Select / বেছে দিন");
+    updateDistrictOptions();
+    updateSignupDistrictOptions();
+    populateDobOptions("profile", { day: "Day", month: "Month", year: "Year" });
+    populateDobOptions("signup", { day: "দিন", month: "মাস", year: "বছর" });
+    fillMultiSelect($("#profileSubjects"), SUBJECT_OPTIONS);
+    fillMultiSelect($("#profileClassLevels"), CLASS_LEVEL_OPTIONS);
+    fillSelect($("#profileFee"), FEE_OPTIONS.map(value => [String(value), value ? `${fmtMoney(value)} / month` : "Negotiable / Not set"]), "Choose monthly fee");
+    fillSelect($("#profileExperience"), EXPERIENCE_OPTIONS.map(value => [String(value), value === 0 ? "Fresh / No experience" : `${value}+ years`]), "Choose experience");
+    fillSelect($("#profileQualification"), QUALIFICATION_OPTIONS, "Choose qualification");
+    fillMultiSelect($("#profileAvailability"), AVAILABILITY_OPTIONS);
+    fillSelect($("#profileGraduationStatus"), GRADUATION_STATUS_OPTIONS, "Choose status");
+    fillSelect($("#signupStudentClass"), CLASS_LEVEL_OPTIONS, "Class 1");
+    fillMultiSelect($("#signupSubjects"), SUBJECT_OPTIONS);
+    fillSelect($("#signupFee"), FEE_OPTIONS.map(value => [String(value), value ? `${fmtMoney(value)} / month` : "Negotiable / Not set"]), "e.g. 3000");
+    fillMultiSelect($("#signupClassLevels"), CLASS_LEVEL_OPTIONS);
+    fillSelect($("#signupExperience"), EXPERIENCE_OPTIONS.map(value => [String(value), value === 0 ? "Less than 1 year / ১ বছরের কম" : `${value}+ years`]), "Less than 1 year");
+    fillSelect($("#signupQualification"), QUALIFICATION_OPTIONS, "Choose qualification");
+    if ($("#signupBkashNumber")) $("#signupBkashNumber").textContent = State.config.bkashNumber || "01XXXXXXXXX";
+    updateSignupRoleFields();
+    fillSelect($("#requestSubject"), SUBJECT_OPTIONS, "Choose subject");
+    fillSelect($("#requestClassLevel"), CLASS_LEVEL_OPTIONS, "Choose class level");
+    fillSelect($("#materialSubject"), SUBJECT_OPTIONS, "Choose subject");
+  }
 
   document.addEventListener("DOMContentLoaded", init);
 
@@ -40,8 +277,8 @@
     initSupabase();
     bindEvents();
     await registerServiceWorker();
-    routeTo(location.hash.replace("#", "") || "home");
     await restoreSession();
+    routeTo(location.hash.replace("#", "") || "home");
     await loadTeacherCount();
   }
 
@@ -82,6 +319,13 @@
   }
 
   function bindEvents() {
+    populateOptionFields();
+    $("#profileDivision")?.addEventListener("change", () => updateDistrictOptions());
+    $("#profileDistrict")?.addEventListener("change", () => updateUpazilaOptions());
+    $("#signupDivision")?.addEventListener("change", () => updateSignupDistrictOptions());
+    $("#signupDistrict")?.addEventListener("change", () => updateSignupUpazilaOptions());
+    $$("#authForm input[type=radio]").forEach(input => input.addEventListener("change", () => { updateSignupRoleFields(); syncChoiceCards($("#authForm")); }));
+    $("#profileForm [name=profile_photo]")?.addEventListener("change", previewSelectedProfilePhoto);
     $$('[data-route]').forEach(link => link.addEventListener("click", event => {
       event.preventDefault();
       routeTo(link.dataset.route);
@@ -94,13 +338,24 @@
     $("#openAuthBtn")?.addEventListener("click", () => openAuth("login"));
     $("#heroJoinBtn")?.addEventListener("click", () => openAuth("signup"));
     $("#logoutBtn")?.addEventListener("click", logout);
+    $("#authCloseBtn")?.addEventListener("click", () => {
+      $("#authModal")?.close();
+      if (!State.user && ["dashboard", "chat", "admin"].includes(location.hash.replace("#", ""))) routeTo("home");
+    });
+    $("#authModal")?.addEventListener("cancel", () => {
+      if (!State.user && ["dashboard", "chat", "admin"].includes(location.hash.replace("#", ""))) setTimeout(() => routeTo("home"), 0);
+    });
+    $("#requestCloseBtn")?.addEventListener("click", () => $("#requestModal")?.close());
 
     $$("[data-auth-mode]").forEach(button => button.addEventListener("click", () => setAuthMode(button.dataset.authMode)));
     $("#authForm")?.addEventListener("submit", handleAuthSubmit);
     $("#resetPasswordBtn")?.addEventListener("click", resetPassword);
 
     $("#searchTeachersBtn")?.addEventListener("click", loadTeachers);
-    ["#filterSubject", "#filterDistrict", "#filterClass"].forEach(id => $(id)?.addEventListener("input", debounce(loadTeachers, 350)));
+    ["#filterSubject", "#filterDistrict", "#filterClass"].forEach(id => {
+      $(id)?.addEventListener("input", debounce(loadTeachers, 350));
+      $(id)?.addEventListener("change", loadTeachers);
+    });
     $("#requestForm")?.addEventListener("submit", submitTeacherRequest);
 
     $("#profileForm")?.addEventListener("submit", saveProfile);
@@ -185,6 +440,29 @@
 
     if (error && error.code !== "PGRST116") toast(error.message, "error");
     State.profile = data || null;
+
+    if (!State.profile) {
+      const baseRole = isAdminEmail(State.user.email) ? "admin" : "student";
+      const baseProfile = {
+        id: State.user.id,
+        email: State.user.email,
+        full_name: State.user.user_metadata?.full_name || State.user.email?.split("@")[0] || "New User",
+        role: baseRole,
+        status: baseRole === "teacher" ? "pending" : "approved",
+        verified: baseRole !== "teacher",
+        updated_at: new Date().toISOString()
+      };
+      const { error: createError } = await State.client.from("profiles").upsert(baseProfile);
+      if (!createError) State.profile = baseProfile;
+    }
+
+    // Keep the project owner account permanently approved as admin.
+    if (isAdminEmail(State.user.email) && State.profile?.role !== "admin") {
+      const adminPatch = { role: "admin", status: "approved", verified: true, updated_at: new Date().toISOString() };
+      const { error: adminError } = await State.client.from("profiles").upsert({ ...State.profile, id: State.user.id, email: State.user.email, ...adminPatch });
+      if (!adminError) State.profile = { ...State.profile, ...adminPatch };
+    }
+
     await loadRequests();
     await loadSchedules();
     await loadAttendance();
@@ -193,14 +471,16 @@
 
   function updateAuthUI() {
     const loggedIn = Boolean(State.user);
+    if (loggedIn && $("#authModal")?.open) $("#authModal")?.close();
     $("#openAuthBtn").hidden = loggedIn;
     $("#logoutBtn").hidden = !loggedIn;
     $$('[data-admin-link]').forEach(link => { link.hidden = !isAdmin(); });
 
     const name = State.profile?.full_name || State.user?.email || "Guest";
     $("#profileName").textContent = name;
-    $("#profileRole").textContent = State.profile ? `${capitalize(State.profile.role)} • ${State.profile.district || "No district"}` : "Login to manage your profile";
-    $("#profileAvatar").textContent = initials(name);
+    const roleLabel = isAdmin() ? "Admin" : capitalize(State.profile?.role || "guest");
+    $("#profileRole").textContent = State.profile ? `${roleLabel} • ${State.profile.district || "No district"}` : "Login to manage your profile";
+    setAvatar($("#profileAvatar"), State.profile?.avatar_url, name);
     $("#profileStatus").textContent = State.profile?.status || "Not connected";
     $("#profileStatus").className = `pill ${State.profile?.status === "approved" ? "success" : State.profile?.status === "rejected" ? "danger" : "warning"}`;
 
@@ -209,8 +489,7 @@
 
   function isAdmin() {
     const email = State.user?.email?.toLowerCase();
-    const configAdmin = State.config.adminEmails?.map(item => item.toLowerCase()) || [];
-    return Boolean(email && (configAdmin.includes(email) || State.profile?.role === "admin"));
+    return Boolean(email && (isAdminEmail(email) || State.profile?.role === "admin"));
   }
 
   function openAuth(mode = "login") {
@@ -222,8 +501,19 @@
     State.authMode = mode;
     $$("[data-auth-mode]").forEach(button => button.classList.toggle("active", button.dataset.authMode === mode));
     $("#signupFields").hidden = mode !== "signup";
+    $("#loginFields").hidden = mode === "signup";
+    const loginEmail = $("#authForm [name=email]");
+    const loginPass = $("#authForm [name=password]");
+    const signupEmail = $("#authForm [name=email_signup]");
+    const signupPass = $("#authForm [name=password_signup]");
+    if (loginEmail) loginEmail.required = mode !== "signup";
+    if (loginPass) loginPass.required = mode !== "signup";
+    if (signupEmail) signupEmail.required = mode === "signup";
+    if (signupPass) signupPass.required = mode === "signup";
+    updateSignupRoleFields();
+    if ($("#signupBkashNumber")) $("#signupBkashNumber").textContent = State.config.bkashNumber || "01XXXXXXXXX";
     $("#authTitle").textContent = mode === "signup" ? "Create your account" : "Welcome back";
-    $("#authSubtitle").textContent = mode === "signup" ? "Join as student or teacher." : "Login to manage requests, chat, and profile.";
+    $("#authSubtitle").textContent = mode === "signup" ? "Complete information now; later it can be edited from Profile." : "Login to manage requests, chat, and profile.";
     $("#authSubmitBtn").textContent = mode === "signup" ? "Create Account" : "Login";
   }
 
@@ -231,14 +521,42 @@
     event.preventDefault();
     if (!requireClient()) return;
 
-    const form = new FormData(event.currentTarget);
-    const email = form.get("email")?.trim();
-    const password = form.get("password");
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
+    const email = (State.authMode === "signup" ? form.get("email_signup") : form.get("email"))?.trim();
+    const password = State.authMode === "signup" ? form.get("password_signup") : form.get("password");
 
     try {
       if (State.authMode === "signup") {
         const fullName = form.get("full_name")?.trim() || email.split("@")[0];
-        const role = form.get("role") || "student";
+        const role = isAdminEmail(email) ? "admin" : (form.get("role") || "student");
+        const dateOfBirth = buildDateFromParts(form.get("dob_day"), form.get("dob_month"), form.get("dob_year"));
+        const subjects = role === "teacher" ? form.getAll("subjects").map(item => String(item).trim()).filter(Boolean) : [];
+        const classLevels = role === "teacher" ? form.getAll("class_levels").map(item => String(item).trim()).filter(Boolean) : [form.get("student_class") || "Class 1"];
+        const profilePayloadBase = {
+          email,
+          full_name: fullName,
+          phone: form.get("phone")?.trim(),
+          role,
+          gender: form.get("gender") || null,
+          blood_group: form.get("blood_group") || null,
+          date_of_birth: dateOfBirth,
+          division: form.get("division") || null,
+          district: form.get("district") || null,
+          upazila: form.get("upazila") || null,
+          institution: form.get("institution")?.trim() || null,
+          graduation_status: role === "student" ? "Studying" : "Graduated",
+          subjects,
+          class_levels: classLevels,
+          fee_monthly: role === "teacher" ? Number(form.get("fee_monthly") || 0) : 0,
+          experience_years: role === "teacher" ? Number(form.get("experience_years") || 0) : 0,
+          qualification: role === "teacher" ? (form.get("qualification") || null) : null,
+          availability: role === "teacher" ? "Evening, Weekends" : null,
+          bio: role === "teacher" ? "Tuition Master verified teacher profile." : "Tuition Master student profile.",
+          status: role === "teacher" ? "pending" : "approved",
+          verified: role !== "teacher",
+          updated_at: new Date().toISOString()
+        };
         const { data, error } = await State.client.auth.signUp({
           email,
           password,
@@ -246,23 +564,31 @@
         });
         if (error) throw error;
         if (data.user) {
-          await State.client.from("profiles").upsert({
-            id: data.user.id,
-            email,
-            full_name: fullName,
-            role,
-            status: role === "teacher" ? "pending" : "approved",
-            verified: role !== "teacher"
-          });
+          const { error: profileError } = await State.client.from("profiles").upsert({ id: data.user.id, ...profilePayloadBase });
+          if (profileError) throw profileError;
+          if (role === "teacher" && form.get("registration_trx_id")?.trim()) {
+            await State.client.from("payments").insert({
+              payer_id: data.user.id,
+              payment_type: "teacher_registration_fee",
+              method: "bkash",
+              amount: 0,
+              transaction_id: form.get("registration_trx_id")?.trim(),
+              status: "pending"
+            });
+          }
         }
-        toast("Account created. Email confirmation enabled থাকলে inbox check করো।", "success");
+        if (data.session) {
+          toast("Account created and logged in.", "success");
+        } else {
+          toast("Account created. Email confirmation ON থাকলে inbox থেকে confirm করে login করো।", "success");
+        }
       } else {
         const { error } = await State.client.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast("Login successful.", "success");
       }
       $("#authModal")?.close();
-      event.currentTarget.reset();
+      formEl?.reset();
     } catch (error) {
       toast(error.message || "Authentication failed.", "error");
     }
@@ -292,35 +618,122 @@
     const form = $("#profileForm");
     if (!form) return;
     const profile = State.profile || {};
+    const adminAccount = isAdmin();
+
     form.email.value = State.user?.email || "";
-    ["full_name", "phone", "role", "district", "upazila", "fee_monthly", "experience_years", "qualification", "availability", "bio"].forEach(key => {
-      if (form[key]) form[key].value = profile[key] ?? (key === "role" ? "student" : "");
+
+    if (form.role) {
+      if (adminAccount) {
+        ensureRoleOption(form.role, "admin", "Admin");
+        form.role.value = "admin";
+        form.role.disabled = true;
+      } else {
+        const adminOption = form.role.querySelector('option[value="admin"]');
+        if (adminOption) adminOption.remove();
+        form.role.disabled = false;
+      }
+    }
+
+    ["full_name", "phone", "institution", "bio"].forEach(key => {
+      if (form[key]) form[key].value = profile[key] ?? "";
     });
-    form.subjects.value = Array.isArray(profile.subjects) ? profile.subjects.join(", ") : "";
-    form.class_levels.value = Array.isArray(profile.class_levels) ? profile.class_levels.join(", ") : "";
-    $("#approvalHint").textContent = profile.role === "teacher" ? `Teacher account: ${profile.status || "pending"}` : "Student profiles are active by default";
+    setAvatar($("#profilePhotoPreview"), profile.avatar_url, profile.full_name || State.user?.email || "TM");
+    if (form.gender) form.gender.value = profile.gender || "";
+    if (form.blood_group) form.blood_group.value = profile.blood_group || "";
+    if (form.graduation_status) form.graduation_status.value = profile.graduation_status || "";
+    const dob = parseDateParts(profile.date_of_birth || "");
+    setSelectValues(form.dob_day, [String(Number(dob.day) || "")]);
+    setSelectValues(form.dob_month, [String(Number(dob.month) || "")]);
+    setSelectValues(form.dob_year, [dob.year || ""]);
+    const division = profile.division || getDivisionForDistrict(profile.district || "");
+    setSelectValues(form.division, [division]);
+    updateDistrictOptions(profile.district || "");
+    updateUpazilaOptions(profile.upazila || "");
+    setSelectValues(form.subjects, Array.isArray(profile.subjects) ? profile.subjects : csvToArray(profile.subjects || ""));
+    setSelectValues(form.class_levels, Array.isArray(profile.class_levels) ? profile.class_levels : csvToArray(profile.class_levels || ""));
+    setSelectValues(form.fee_monthly, [String(profile.fee_monthly ?? "")]);
+    setSelectValues(form.experience_years, [String(profile.experience_years ?? "")]);
+    setSelectValues(form.qualification, [profile.qualification || ""]);
+    setSelectValues(form.availability, csvToArray(profile.availability || ""));
+    if (form.role && !adminAccount) form.role.value = profile.role ?? "student";
+
+    if (adminAccount) {
+      $("#approvalHint").textContent = "Admin account: approved";
+      $("#approvalHint").className = "pill success";
+    } else {
+      $("#approvalHint").textContent = profile.role === "teacher" ? `Teacher account: ${profile.status || "pending"}` : "Student profiles are active by default";
+      $("#approvalHint").className = `pill ${profile.role === "teacher" && profile.status !== "approved" ? "warning" : "success"}`;
+    }
+  }
+
+  function previewSelectedProfilePhoto(event) {
+    const file = event.currentTarget.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      event.currentTarget.value = "";
+      toast("Only image file upload করা যাবে।", "error");
+      return;
+    }
+    if (file.size > 100 * 1024 * 1024) {
+      event.currentTarget.value = "";
+      toast("Profile picture maximum 100 MB হতে পারবে।", "error");
+      return;
+    }
+    const preview = $("#profilePhotoPreview");
+    if (preview) preview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="Selected profile picture preview" />`;
+  }
+
+  async function uploadProfilePhoto(file) {
+    if (!file || !file.size) return State.profile?.avatar_url || null;
+    if (!file.type.startsWith("image/")) throw new Error("Only image file upload করা যাবে।");
+    if (file.size > 100 * 1024 * 1024) throw new Error("Profile picture maximum 100 MB হতে পারবে।");
+
+    const extension = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+    const path = `${State.user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${extension}`;
+    const { error } = await State.client.storage.from("avatars").upload(path, file, {
+      cacheControl: "3600",
+      upsert: true,
+      contentType: file.type
+    });
+    if (error) throw new Error(`${error.message}. Supabase SQL patch run করে avatars bucket create করো।`);
+    const { data } = State.client.storage.from("avatars").getPublicUrl(path);
+    return data?.publicUrl || null;
   }
 
   async function saveProfile(event) {
     event.preventDefault();
     if (!requireClient() || !requireUser()) return;
     const form = new FormData(event.currentTarget);
-    const role = form.get("role");
+    const role = isAdmin() ? "admin" : (form.get("role") || "student");
     const currentStatus = State.profile?.status;
+    let avatarUrl = State.profile?.avatar_url || null;
+    try {
+      avatarUrl = await uploadProfilePhoto(form.get("profile_photo"));
+    } catch (error) {
+      return toast(error.message || "Profile picture upload failed.", "error");
+    }
+    const dateOfBirth = buildDateFromParts(form.get("dob_day"), form.get("dob_month"), form.get("dob_year"));
     const payload = {
       id: State.user.id,
       email: State.user.email,
       full_name: form.get("full_name")?.trim(),
       phone: form.get("phone")?.trim(),
       role,
+      gender: form.get("gender") || null,
+      blood_group: form.get("blood_group") || null,
+      institution: form.get("institution")?.trim() || null,
+      graduation_status: form.get("graduation_status") || null,
+      date_of_birth: dateOfBirth,
+      division: form.get("division")?.trim(),
       district: form.get("district")?.trim(),
       upazila: form.get("upazila")?.trim(),
-      subjects: csvToArray(form.get("subjects")),
-      class_levels: csvToArray(form.get("class_levels")),
+      avatar_url: avatarUrl,
+      subjects: form.getAll("subjects").map(item => String(item).trim()).filter(Boolean),
+      class_levels: form.getAll("class_levels").map(item => String(item).trim()).filter(Boolean),
       fee_monthly: Number(form.get("fee_monthly") || 0),
       experience_years: Number(form.get("experience_years") || 0),
       qualification: form.get("qualification")?.trim(),
-      availability: form.get("availability")?.trim(),
+      availability: form.getAll("availability").map(item => String(item).trim()).filter(Boolean).join(", "),
       bio: form.get("bio")?.trim(),
       status: role === "teacher" ? (currentStatus === "approved" ? "approved" : "pending") : "approved",
       verified: role !== "teacher" ? true : State.profile?.verified || false,
@@ -330,6 +743,7 @@
     const { error } = await State.client.from("profiles").upsert(payload);
     if (error) return toast(error.message, "error");
     State.profile = payload;
+    if (event.currentTarget.profile_photo) event.currentTarget.profile_photo.value = "";
     updateAuthUI();
     toast(role === "teacher" && payload.status !== "approved" ? "Profile saved. Admin approval লাগবে।" : "Profile saved successfully.", "success");
   }
@@ -359,7 +773,7 @@
 
     let query = State.client
       .from("profiles")
-      .select("id, full_name, email, phone, district, upazila, subjects, class_levels, qualification, experience_years, fee_monthly, bio, availability, rating, total_reviews, verified, status")
+      .select("id, full_name, email, phone, district, upazila, subjects, class_levels, qualification, experience_years, fee_monthly, bio, availability, avatar_url, rating, total_reviews, verified, status")
       .eq("role", "teacher")
       .eq("status", "approved")
       .order("verified", { ascending: false })
@@ -391,7 +805,7 @@
     grid.innerHTML = State.teachers.map(teacher => `
       <article class="teacher-card">
         <div class="teacher-card-head">
-          <div class="teacher-avatar">${safeText(initials(teacher.full_name))}</div>
+          <div class="teacher-avatar">${avatarContent(teacher.avatar_url, teacher.full_name || "Teacher")}</div>
           <div>
             <h3>${safeText(teacher.full_name || "Teacher")}</h3>
             <p>${safeText(teacher.district || "Bangladesh")}${teacher.upazila ? " • " + safeText(teacher.upazila) : ""}</p>
@@ -401,7 +815,7 @@
         <div class="meta-list">
           <span>🎓 ${safeText(teacher.qualification || "Qualification not added")}</span>
           <span>⭐ ${Number(teacher.rating || 0).toFixed(1)} (${teacher.total_reviews || 0} reviews)</span>
-          <span>🕒 ${safeText(teacher.availability || "Availability flexible")}</span>
+          <span>🕒 ${safeText(Array.isArray(teacher.availability) ? teacher.availability.join(", ") : (teacher.availability || "Availability flexible"))}</span>
           <span>💰 ${fmtMoney(teacher.fee_monthly)} / month</span>
         </div>
         <p>${safeText(teacher.bio || "Verified Tuition Master teacher ready for student matching.")}</p>
@@ -429,6 +843,8 @@
     const modal = $("#requestModal");
     const form = $("#requestForm");
     form.teacher_id.value = teacher.id;
+    fillSelect(form.subject, teacher.subjects?.length ? teacher.subjects : SUBJECT_OPTIONS, "Choose subject");
+    fillSelect(form.class_level, teacher.class_levels?.length ? teacher.class_levels : CLASS_LEVEL_OPTIONS, "Choose class level");
     form.subject.value = teacher.subjects?.[0] || "";
     form.class_level.value = teacher.class_levels?.[0] || "";
     form.bkash_trx_id.value = "";
@@ -439,7 +855,8 @@
   async function submitTeacherRequest(event) {
     event.preventDefault();
     if (!requireClient() || !requireUser()) return;
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const teacherId = form.get("teacher_id");
     const teacher = State.teachers.find(item => item.id === teacherId) || {};
     const monthlyFee = Number(teacher.fee_monthly || 0);
@@ -475,7 +892,7 @@
     }
 
     $("#requestModal")?.close();
-    event.currentTarget.reset();
+    formEl?.reset();
     await loadRequests();
     toast("Request submitted. Admin payment verify করলে request active হবে।", "success");
   }
@@ -581,7 +998,8 @@
   async function saveSchedule(event) {
     event.preventDefault();
     if (!requireClient() || !requireUser()) return;
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const active = State.requests[0];
     const payload = {
       request_id: active?.id || null,
@@ -594,7 +1012,7 @@
     };
     const { error } = await State.client.from("schedules").insert(payload);
     if (error) return toast(error.message, "error");
-    event.currentTarget.reset();
+    formEl?.reset();
     await loadSchedules();
     toast("Schedule added.", "success");
   }
@@ -619,7 +1037,8 @@
   async function saveAttendance(event) {
     event.preventDefault();
     if (!requireClient() || !requireUser()) return;
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const active = State.requests[0];
     const payload = {
       request_id: active?.id || null,
@@ -631,7 +1050,7 @@
     };
     const { error } = await State.client.from("attendance").insert(payload);
     if (error) return toast(error.message, "error");
-    event.currentTarget.reset();
+    formEl?.reset();
     await loadAttendance();
     toast("Attendance saved.", "success");
   }
@@ -652,7 +1071,8 @@
   async function uploadMaterial(event) {
     event.preventDefault();
     if (!requireClient() || !requireUser()) return;
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const file = form.get("file");
     if (!file || !file.name) return toast("Upload করার জন্য file select করো।", "error");
 
@@ -671,7 +1091,7 @@
       file_type: file.type || "application/octet-stream"
     });
     if (error) return toast(error.message, "error");
-    event.currentTarget.reset();
+    formEl?.reset();
     await loadMaterials();
     toast("Material uploaded.", "success");
   }
