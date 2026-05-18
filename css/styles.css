@@ -282,8 +282,3 @@ th { color: var(--muted); font-size: .82rem; text-transform: uppercase; letter-s
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
-
-/* Option based profile fields */
-select[multiple] { min-height: 138px; padding-block: 10px; }
-select option { background: var(--surface-strong); color: var(--text); }
-.field-note { color: var(--muted); font-weight: 700; font-size: .76rem; line-height: 1.35; }

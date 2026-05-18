@@ -108,11 +108,11 @@
         <div class="filter-panel reveal delay-1">
           <label>
             Subject
-            <select id="filterSubject"><option value="">Any subject</option></select>
+            <input id="filterSubject" type="search" placeholder="Physics, Math, English..." />
           </label>
           <label>
             District
-            <select id="filterDistrict"><option value="">Any district</option></select>
+            <input id="filterDistrict" type="search" placeholder="Dhaka, Chattogram..." />
           </label>
           <label>
             Class level
@@ -160,15 +160,15 @@
                 <label>Full name<input name="full_name" required placeholder="Your full name" /></label>
                 <label>Email<input name="email" type="email" readonly placeholder="Login email" /></label>
                 <label>Phone<input name="phone" placeholder="01XXXXXXXXX" /></label>
-                <label>Role<select name="role" required><option value="student">Student</option><option value="teacher">Teacher</option><option value="admin" disabled>Admin</option></select></label>
-                <label>District<select name="district" id="profileDistrict" required></select></label>
-                <label>Upazila / Area<select name="upazila" id="profileUpazila" required></select></label>
-                <label>Subjects<select name="subjects" id="profileSubjects" multiple required></select><small class="field-note">Mobile: tap multiple subjects. PC: Ctrl ধরে multiple select.</small></label>
-                <label>Class levels<select name="class_levels" id="profileClassLevels" multiple required></select><small class="field-note">এক বা একাধিক class level choose করো।</small></label>
-                <label>Monthly fee (৳)<select name="fee_monthly" id="profileFee" required></select></label>
-                <label>Experience years<select name="experience_years" id="profileExperience" required></select></label>
-                <label class="wide">Qualification<select name="qualification" id="profileQualification" required></select></label>
-                <label class="wide">Availability<select name="availability" id="profileAvailability" multiple required></select><small class="field-note">Available time slots choose করো।</small></label>
+                <label>Role<select name="role" required><option value="student">Student</option><option value="teacher">Teacher</option></select></label>
+                <label>District<input name="district" placeholder="Dhaka" /></label>
+                <label>Upazila / Area<input name="upazila" placeholder="Mirpur" /></label>
+                <label>Subjects<input name="subjects" placeholder="Physics, Math, English" /></label>
+                <label>Class levels<input name="class_levels" placeholder="SSC, HSC, Admission" /></label>
+                <label>Monthly fee (৳)<input name="fee_monthly" type="number" min="0" placeholder="5000" /></label>
+                <label>Experience years<input name="experience_years" type="number" min="0" placeholder="3" /></label>
+                <label class="wide">Qualification<input name="qualification" placeholder="BSc in CSE, Dhaka University" /></label>
+                <label class="wide">Availability<input name="availability" placeholder="Fri-Sat evening, weekday night" /></label>
                 <label class="wide">Bio<textarea name="bio" rows="4" placeholder="Write a short professional bio..."></textarea></label>
                 <button class="btn btn-primary wide" type="submit">Save Profile</button>
               </form>
@@ -209,7 +209,7 @@
               <div class="panel-head"><div><h2>Study Materials</h2><p>Upload notes, PDFs, worksheets, or resources for students.</p></div></div>
               <form class="form-grid compact" id="materialForm">
                 <label>Title<input name="title" required placeholder="Chapter 5 Notes" /></label>
-                <label>Subject<select name="subject" id="materialSubject"></select></label>
+                <label>Subject<input name="subject" placeholder="Physics" /></label>
                 <label class="wide">File<input name="file" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.txt" /></label>
                 <button class="btn btn-primary wide" type="submit">Upload Material</button>
               </form>
@@ -260,7 +260,7 @@
 
   <dialog class="auth-modal" id="authModal">
     <form method="dialog" class="auth-card" id="authForm">
-      <button class="close-btn" type="button" id="authCloseBtn" aria-label="Close">×</button>
+      <button class="close-btn" value="cancel" aria-label="Close">×</button>
       <div class="auth-tabs">
         <button type="button" class="active" data-auth-mode="login">Login</button>
         <button type="button" data-auth-mode="signup">Signup</button>
@@ -280,12 +280,12 @@
 
   <dialog class="request-modal" id="requestModal">
     <form method="dialog" class="auth-card" id="requestForm">
-      <button class="close-btn" type="button" id="requestCloseBtn" aria-label="Close">×</button>
+      <button class="close-btn" value="cancel" aria-label="Close">×</button>
       <h2>Request Teacher</h2>
       <p id="requestTeacherName">Submit request and bKash transaction ID for verification.</p>
       <input type="hidden" name="teacher_id" />
-      <label>Subject<select name="subject" id="requestSubject" required></select></label>
-      <label>Class level<select name="class_level" id="requestClassLevel" required></select></label>
+      <label>Subject<input name="subject" required placeholder="Physics" /></label>
+      <label>Class level<input name="class_level" required placeholder="HSC" /></label>
       <label>Schedule note<textarea name="schedule_note" rows="3" placeholder="Preferred time and location"></textarea></label>
       <label>bKash Transaction ID<input name="bkash_trx_id" placeholder="TXN123456" /></label>
       <button class="btn btn-primary full" type="submit">Submit Request</button>
