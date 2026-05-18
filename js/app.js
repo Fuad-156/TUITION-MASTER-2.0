@@ -28,6 +28,50 @@
   // This project owner email is always treated as Admin in the UI.
   const PERMANENT_ADMIN_EMAILS = ["skfuad502@gmail.com"];
 
+
+  const SUBJECT_OPTIONS = [
+    "Bangla", "English", "Math", "General Math", "Higher Math", "Physics", "Chemistry", "Biology",
+    "ICT", "Accounting", "Finance", "Business Studies", "Economics", "Civics", "History", "Geography",
+    "Islamic Studies", "Science", "Social Science", "Admission Test", "IELTS", "Spoken English", "Arabic", "Quran"
+  ];
+
+  const CLASS_LEVEL_OPTIONS = [
+    "Play", "Nursery", "KG", "Class 1", "Class 2", "Class 3", "Class 4", "Class 5",
+    "Class 6", "Class 7", "Class 8", "Class 9", "Class 10", "SSC", "HSC", "Admission", "University", "IELTS"
+  ];
+
+  const DISTRICT_AREA_OPTIONS = {
+    "Dhaka": ["Mirpur", "Dhanmondi", "Uttara", "Mohammadpur", "Bashundhara", "Gulshan", "Banani", "Badda", "Rampura", "Khilgaon", "Farmgate", "Motijheel", "Wari", "Jatrabari", "Savar", "Keraniganj", "Dohar", "Nawabganj"],
+    "Khulna": ["Khulna Sadar", "Sonadanga", "Khalishpur", "Daulatpur", "Khan Jahan Ali", "Batiaghata", "Dumuria", "Dacope", "Koyra", "Paikgacha", "Rupsa", "Terokhada", "Phultala", "Dighalia"],
+    "Chattogram": ["Agrabad", "GEC", "Nasirabad", "Panchlaish", "Halishahar", "Patenga", "Chawkbazar", "Kotwali", "Sitakunda", "Hathazari", "Raozan", "Patiya", "Boalkhali", "Mirsharai", "Anwara"],
+    "Rajshahi": ["Rajshahi Sadar", "Boalia", "Motihar", "Shaheb Bazar", "Rajpara", "Paba", "Godagari", "Tanore", "Durgapur", "Bagha", "Charghat", "Puthia", "Bagmara", "Mohanpur"],
+    "Sylhet": ["Sylhet Sadar", "Zindabazar", "Ambarkhana", "Shahjalal Upashahar", "Subid Bazar", "South Surma", "Beanibazar", "Golapganj", "Jaintiapur", "Kanaighat", "Companiganj", "Fenchuganj"],
+    "Barishal": ["Barishal Sadar", "Nathullabad", "Rupatali", "Band Road", "Bakerganj", "Babuganj", "Banaripara", "Gournadi", "Agailjhara", "Hizla", "Mehendiganj", "Muladi", "Wazirpur"],
+    "Rangpur": ["Rangpur Sadar", "Medical Mor", "Jahaj Company", "Mithapukur", "Pirgachha", "Badarganj", "Kaunia", "Gangachara", "Taraganj", "Pirganj"],
+    "Mymensingh": ["Mymensingh Sadar", "Ganginarpar", "Maskanda", "Trishal", "Bhaluka", "Muktagacha", "Phulpur", "Gafargaon", "Ishwarganj", "Nandail", "Gouripur", "Haluaghat"],
+    "Cumilla": ["Cumilla Sadar", "Kandirpar", "Kotbari", "Laksam", "Chauddagram", "Daudkandi", "Debidwar", "Burichang", "Chandina", "Homna", "Meghna", "Monohorgonj"],
+    "Jashore": ["Jashore Sadar", "Monihar", "New Market", "Chowgacha", "Jhikargacha", "Keshabpur", "Bagharpara", "Manirampur", "Abhaynagar", "Sharsha"],
+    "Gazipur": ["Gazipur Sadar", "Tongi", "Board Bazar", "Konabari", "Kaliakair", "Kapasia", "Kaliganj", "Sreepur"],
+    "Narayanganj": ["Narayanganj Sadar", "Chashara", "Siddhirganj", "Fatullah", "Bandar", "Rupganj", "Sonargaon", "Araihazar"],
+    "Bogura": ["Bogura Sadar", "Satmatha", "Sherpur", "Shibganj", "Gabtali", "Dhunat", "Sariakandi", "Sonatola", "Kahaloo", "Nandigram"],
+    "Dinajpur": ["Dinajpur Sadar", "Birampur", "Birganj", "Bochaganj", "Chirirbandar", "Fulbari", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Nawabganj", "Parbatipur"],
+    "Kushtia": ["Kushtia Sadar", "Kumarkhali", "Khoksa", "Mirpur", "Daulatpur", "Bheramara"],
+    "Faridpur": ["Faridpur Sadar", "Boalmari", "Alfadanga", "Bhanga", "Charbhadrasan", "Madhukhali", "Nagarkanda", "Sadarpur", "Saltha"],
+    "Noakhali": ["Noakhali Sadar", "Maijdee", "Begumganj", "Chatkhil", "Companyganj", "Hatiya", "Senbagh", "Sonaimuri", "Subarnachar"],
+    "Cox's Bazar": ["Cox's Bazar Sadar", "Chakaria", "Ramu", "Teknaf", "Ukhia", "Maheshkhali", "Kutubdia", "Pekua"],
+    "Other": ["Sadar", "Town Area", "University Area", "College Area", "Residential Area", "Online"]
+  };
+
+  const DISTRICT_OPTIONS = [
+    "Dhaka", "Khulna", "Chattogram", "Rajshahi", "Sylhet", "Barishal", "Rangpur", "Mymensingh",
+    "Cumilla", "Jashore", "Gazipur", "Narayanganj", "Bogura", "Dinajpur", "Kushtia", "Faridpur", "Noakhali", "Cox's Bazar", "Other"
+  ];
+
+  const FEE_OPTIONS = [0, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000, 7000, 8000, 10000, 12000, 15000, 20000];
+  const EXPERIENCE_OPTIONS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15];
+  const QUALIFICATION_OPTIONS = ["SSC", "HSC", "Diploma", "BSc", "BA", "BBA", "BSS", "BEd", "MSc", "MA", "MBA", "MEd", "MBBS", "Engineering", "University Student", "Other"];
+  const AVAILABILITY_OPTIONS = ["Morning", "Afternoon", "Evening", "Night", "Weekdays", "Weekends", "Fri-Sat", "Online", "Home Tuition", "Batch Tuition"];
+
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const fmtMoney = (value = 0) => `৳${Number(value || 0).toLocaleString("en-BD")}`;
@@ -50,6 +94,72 @@
       select.appendChild(option);
     }
     option.disabled = disabled;
+  }
+
+
+  function optionHtml(value, label = value) {
+    return `<option value="${safeText(value)}">${safeText(label)}</option>`;
+  }
+
+  function fillSelect(select, options, placeholder = "Choose option") {
+    if (!select) return;
+    const current = select.value;
+    select.innerHTML = optionHtml("", placeholder) + options.map(item => Array.isArray(item) ? optionHtml(item[0], item[1]) : optionHtml(item)).join("");
+    if (current && [...select.options].some(option => option.value === current)) select.value = current;
+  }
+
+  function fillMultiSelect(select, options) {
+    if (!select) return;
+    const current = getSelectValues(select);
+    select.innerHTML = options.map(item => optionHtml(item)).join("");
+    setSelectValues(select, current);
+  }
+
+  function getSelectValues(select) {
+    if (!select) return [];
+    if (select.multiple) return [...select.selectedOptions].map(option => option.value).filter(Boolean);
+    return select.value ? [select.value] : [];
+  }
+
+  function setSelectValues(select, values = []) {
+    if (!select) return;
+    const normalized = Array.isArray(values) ? values.map(String) : csvToArray(String(values || ""));
+    if (select.multiple) {
+      [...select.options].forEach(option => option.selected = normalized.includes(option.value));
+    } else {
+      const first = normalized[0] || "";
+      if (first && ![...select.options].some(option => option.value === first)) {
+        select.insertAdjacentHTML("beforeend", optionHtml(first));
+      }
+      select.value = first;
+    }
+  }
+
+  function updateUpazilaOptions(selectedValue = "") {
+    const districtSelect = $("#profileDistrict");
+    const upazilaSelect = $("#profileUpazila");
+    if (!upazilaSelect) return;
+    const district = districtSelect?.value || "Other";
+    const areas = DISTRICT_AREA_OPTIONS[district] || DISTRICT_AREA_OPTIONS.Other;
+    fillSelect(upazilaSelect, areas, "Choose area / upazila");
+    if (selectedValue) setSelectValues(upazilaSelect, [selectedValue]);
+  }
+
+  function populateOptionFields() {
+    fillSelect($("#filterSubject"), SUBJECT_OPTIONS, "Any subject");
+    fillSelect($("#filterDistrict"), DISTRICT_OPTIONS, "Any district");
+    fillSelect($("#filterClass"), CLASS_LEVEL_OPTIONS, "Any class");
+    fillSelect($("#profileDistrict"), DISTRICT_OPTIONS, "Choose district");
+    updateUpazilaOptions();
+    fillMultiSelect($("#profileSubjects"), SUBJECT_OPTIONS);
+    fillMultiSelect($("#profileClassLevels"), CLASS_LEVEL_OPTIONS);
+    fillSelect($("#profileFee"), FEE_OPTIONS.map(value => [String(value), value ? `${fmtMoney(value)} / month` : "Negotiable / Not set"]), "Choose monthly fee");
+    fillSelect($("#profileExperience"), EXPERIENCE_OPTIONS.map(value => [String(value), value === 0 ? "Fresh / No experience" : `${value}+ years`]), "Choose experience");
+    fillSelect($("#profileQualification"), QUALIFICATION_OPTIONS, "Choose qualification");
+    fillMultiSelect($("#profileAvailability"), AVAILABILITY_OPTIONS);
+    fillSelect($("#requestSubject"), SUBJECT_OPTIONS, "Choose subject");
+    fillSelect($("#requestClassLevel"), CLASS_LEVEL_OPTIONS, "Choose class level");
+    fillSelect($("#materialSubject"), SUBJECT_OPTIONS, "Choose subject");
   }
 
   document.addEventListener("DOMContentLoaded", init);
@@ -101,6 +211,8 @@
   }
 
   function bindEvents() {
+    populateOptionFields();
+    $("#profileDistrict")?.addEventListener("change", () => updateUpazilaOptions());
     $$('[data-route]').forEach(link => link.addEventListener("click", event => {
       event.preventDefault();
       routeTo(link.dataset.route);
@@ -127,7 +239,10 @@
     $("#resetPasswordBtn")?.addEventListener("click", resetPassword);
 
     $("#searchTeachersBtn")?.addEventListener("click", loadTeachers);
-    ["#filterSubject", "#filterDistrict", "#filterClass"].forEach(id => $(id)?.addEventListener("input", debounce(loadTeachers, 350)));
+    ["#filterSubject", "#filterDistrict", "#filterClass"].forEach(id => {
+      $(id)?.addEventListener("input", debounce(loadTeachers, 350));
+      $(id)?.addEventListener("change", loadTeachers);
+    });
     $("#requestForm")?.addEventListener("submit", submitTeacherRequest);
 
     $("#profileForm")?.addEventListener("submit", saveProfile);
@@ -349,13 +464,18 @@
       }
     }
 
-    ["full_name", "phone", "district", "upazila", "fee_monthly", "experience_years", "qualification", "availability", "bio"].forEach(key => {
+    ["full_name", "phone", "bio"].forEach(key => {
       if (form[key]) form[key].value = profile[key] ?? "";
     });
+    setSelectValues(form.district, [profile.district || ""]);
+    updateUpazilaOptions(profile.upazila || "");
+    setSelectValues(form.subjects, Array.isArray(profile.subjects) ? profile.subjects : csvToArray(profile.subjects || ""));
+    setSelectValues(form.class_levels, Array.isArray(profile.class_levels) ? profile.class_levels : csvToArray(profile.class_levels || ""));
+    setSelectValues(form.fee_monthly, [String(profile.fee_monthly ?? "")]);
+    setSelectValues(form.experience_years, [String(profile.experience_years ?? "")]);
+    setSelectValues(form.qualification, [profile.qualification || ""]);
+    setSelectValues(form.availability, csvToArray(profile.availability || ""));
     if (form.role && !adminAccount) form.role.value = profile.role ?? "student";
-
-    form.subjects.value = Array.isArray(profile.subjects) ? profile.subjects.join(", ") : "";
-    form.class_levels.value = Array.isArray(profile.class_levels) ? profile.class_levels.join(", ") : "";
 
     if (adminAccount) {
       $("#approvalHint").textContent = "Admin account: approved";
@@ -380,12 +500,12 @@
       role,
       district: form.get("district")?.trim(),
       upazila: form.get("upazila")?.trim(),
-      subjects: csvToArray(form.get("subjects")),
-      class_levels: csvToArray(form.get("class_levels")),
+      subjects: form.getAll("subjects").map(item => String(item).trim()).filter(Boolean),
+      class_levels: form.getAll("class_levels").map(item => String(item).trim()).filter(Boolean),
       fee_monthly: Number(form.get("fee_monthly") || 0),
       experience_years: Number(form.get("experience_years") || 0),
       qualification: form.get("qualification")?.trim(),
-      availability: form.get("availability")?.trim(),
+      availability: form.getAll("availability").map(item => String(item).trim()).filter(Boolean).join(", "),
       bio: form.get("bio")?.trim(),
       status: role === "teacher" ? (currentStatus === "approved" ? "approved" : "pending") : "approved",
       verified: role !== "teacher" ? true : State.profile?.verified || false,
@@ -466,7 +586,7 @@
         <div class="meta-list">
           <span>🎓 ${safeText(teacher.qualification || "Qualification not added")}</span>
           <span>⭐ ${Number(teacher.rating || 0).toFixed(1)} (${teacher.total_reviews || 0} reviews)</span>
-          <span>🕒 ${safeText(teacher.availability || "Availability flexible")}</span>
+          <span>🕒 ${safeText(Array.isArray(teacher.availability) ? teacher.availability.join(", ") : (teacher.availability || "Availability flexible"))}</span>
           <span>💰 ${fmtMoney(teacher.fee_monthly)} / month</span>
         </div>
         <p>${safeText(teacher.bio || "Verified Tuition Master teacher ready for student matching.")}</p>
@@ -494,6 +614,8 @@
     const modal = $("#requestModal");
     const form = $("#requestForm");
     form.teacher_id.value = teacher.id;
+    fillSelect(form.subject, teacher.subjects?.length ? teacher.subjects : SUBJECT_OPTIONS, "Choose subject");
+    fillSelect(form.class_level, teacher.class_levels?.length ? teacher.class_levels : CLASS_LEVEL_OPTIONS, "Choose class level");
     form.subject.value = teacher.subjects?.[0] || "";
     form.class_level.value = teacher.class_levels?.[0] || "";
     form.bkash_trx_id.value = "";
