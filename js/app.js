@@ -40,8 +40,8 @@
     initSupabase();
     bindEvents();
     await registerServiceWorker();
-    routeTo(location.hash.replace("#", "") || "home");
     await restoreSession();
+    routeTo(location.hash.replace("#", "") || "home");
     await loadTeacherCount();
   }
 
@@ -94,6 +94,14 @@
     $("#openAuthBtn")?.addEventListener("click", () => openAuth("login"));
     $("#heroJoinBtn")?.addEventListener("click", () => openAuth("signup"));
     $("#logoutBtn")?.addEventListener("click", logout);
+    $("#authCloseBtn")?.addEventListener("click", () => {
+      $("#authModal")?.close();
+      if (!State.user && ["dashboard", "chat", "admin"].includes(location.hash.replace("#", ""))) routeTo("home");
+    });
+    $("#authModal")?.addEventListener("cancel", () => {
+      if (!State.user && ["dashboard", "chat", "admin"].includes(location.hash.replace("#", ""))) setTimeout(() => routeTo("home"), 0);
+    });
+    $("#requestCloseBtn")?.addEventListener("click", () => $("#requestModal")?.close());
 
     $$("[data-auth-mode]").forEach(button => button.addEventListener("click", () => setAuthMode(button.dataset.authMode)));
     $("#authForm")?.addEventListener("submit", handleAuthSubmit);
@@ -193,6 +201,7 @@
 
   function updateAuthUI() {
     const loggedIn = Boolean(State.user);
+    if (loggedIn && $("#authModal")?.open) $("#authModal")?.close();
     $("#openAuthBtn").hidden = loggedIn;
     $("#logoutBtn").hidden = !loggedIn;
     $$('[data-admin-link]').forEach(link => { link.hidden = !isAdmin(); });

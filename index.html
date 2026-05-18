@@ -260,7 +260,7 @@
 
   <dialog class="auth-modal" id="authModal">
     <form method="dialog" class="auth-card" id="authForm">
-      <button class="close-btn" value="cancel" aria-label="Close">×</button>
+      <button class="close-btn" type="button" id="authCloseBtn" aria-label="Close">×</button>
       <div class="auth-tabs">
         <button type="button" class="active" data-auth-mode="login">Login</button>
         <button type="button" data-auth-mode="signup">Signup</button>
@@ -280,7 +280,7 @@
 
   <dialog class="request-modal" id="requestModal">
     <form method="dialog" class="auth-card" id="requestForm">
-      <button class="close-btn" value="cancel" aria-label="Close">×</button>
+      <button class="close-btn" type="button" id="requestCloseBtn" aria-label="Close">×</button>
       <h2>Request Teacher</h2>
       <p id="requestTeacherName">Submit request and bKash transaction ID for verification.</p>
       <input type="hidden" name="teacher_id" />
