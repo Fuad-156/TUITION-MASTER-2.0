@@ -263,7 +263,6 @@
     fillMultiSelect($("#signupClassLevels"), CLASS_LEVEL_OPTIONS);
     fillSelect($("#signupExperience"), EXPERIENCE_OPTIONS.map(value => [String(value), value === 0 ? "Less than 1 year / ১ বছরের কম" : `${value}+ years`]), "Less than 1 year");
     fillSelect($("#signupQualification"), QUALIFICATION_OPTIONS, "Choose qualification");
-    if ($("#signupBkashNumber")) $("#signupBkashNumber").textContent = State.config.bkashNumber || "01XXXXXXXXX";
     updateSignupRoleFields();
     fillSelect($("#requestSubject"), SUBJECT_OPTIONS, "Choose subject");
     fillSelect($("#requestClassLevel"), CLASS_LEVEL_OPTIONS, "Choose class level");
@@ -511,7 +510,6 @@
     if (signupEmail) signupEmail.required = mode === "signup";
     if (signupPass) signupPass.required = mode === "signup";
     updateSignupRoleFields();
-    if ($("#signupBkashNumber")) $("#signupBkashNumber").textContent = State.config.bkashNumber || "01XXXXXXXXX";
     $("#authTitle").textContent = mode === "signup" ? "Create your account" : "Welcome back";
     $("#authSubtitle").textContent = mode === "signup" ? "Complete information now; later it can be edited from Profile." : "Login to manage requests, chat, and profile.";
     $("#authSubmitBtn").textContent = mode === "signup" ? "Create Account" : "Login";
@@ -566,21 +564,11 @@
         if (data.user) {
           const { error: profileError } = await State.client.from("profiles").upsert({ id: data.user.id, ...profilePayloadBase });
           if (profileError) throw profileError;
-          if (role === "teacher" && form.get("registration_trx_id")?.trim()) {
-            await State.client.from("payments").insert({
-              payer_id: data.user.id,
-              payment_type: "teacher_registration_fee",
-              method: "bkash",
-              amount: 0,
-              transaction_id: form.get("registration_trx_id")?.trim(),
-              status: "pending"
-            });
-          }
         }
         if (data.session) {
-          toast("Account created and logged in.", "success");
+          toast(role === "teacher" ? "Teacher account created. Admin approval pending." : "Account created and logged in.", "success");
         } else {
-          toast("Account created. Email confirmation ON থাকলে inbox থেকে confirm করে login করো।", "success");
+          toast(role === "teacher" ? "Teacher account created. Admin approval pending. Email confirmation ON থাকলে inbox confirm করো।" : "Account created. Email confirmation ON থাকলে inbox থেকে confirm করে login করো।", "success");
         }
       } else {
         const { error } = await State.client.auth.signInWithPassword({ email, password });
