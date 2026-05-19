@@ -527,3 +527,23 @@ commit;
 -- Run after the admin has created an account:
 -- update public.profiles set role = 'admin', status = 'approved', verified = true where email = 'your-real-admin-email@gmail.com';
 -- =========================================================
+
+
+-- Notifications table
+create table if not exists notifications (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id) on delete cascade,
+  title text,
+  message text,
+  read boolean default false,
+  created_at timestamptz default now()
+);
+
+-- Weather cache table
+create table if not exists weather_logs (
+  id bigint generated always as identity primary key,
+  location_name text,
+  temperature numeric,
+  humidity numeric,
+  created_at timestamptz default now()
+);
