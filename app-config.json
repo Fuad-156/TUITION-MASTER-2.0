@@ -1,9 +1,0 @@
-{
-  "appName": "Tuition Master",
-  "supabaseUrl": "https://yccdkdmgsefzprdpxbxj.supabase.co",
-  "supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljY2RrZG1nc2VmenByZHB4YnhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMDQ3MjcsImV4cCI6MjA5NDY4MDcyN30.Zzwt_u4k2eR5kX7SL37j_TtE4EQYDjUviI-ZS8jtMmY",
-  "adminEmails": ["skfuad502@gmail.com"],
-  "bkashNumber": "01571505475",
-  "studentServiceFeeRate": 0.10,
-  "teacherCommissionRate": 0.20
-}
