@@ -2,12 +2,11 @@ const CACHE_NAME = "tuition-master-v2.0.0";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./css/styles.css",
-  "./js/app.js",
+  "./styles.css",        // ✅ FIXED: No css/ folder
+  "./app.js",            // ✅ FIXED: No js/ folder
   "./manifest.json",
   "./app-config.json",
   "./assets/icon.svg",
-  "./data/app-content.json",
   "./data/bd-holidays.json",
   "./data/bd-locations.json"
 ];
