@@ -82,42 +82,42 @@
   }
 
   function bindEvents() {
-    $$('[data-route]').forEach(link => link.addEventListener("click", event => {
-      event.preventDefault();
-      routeTo(link.dataset.route);
-    }));
+  $$('[data-route]').forEach(link => link.addEventListener("click", event => {
+    event.preventDefault();
+    routeTo(link.dataset.route);
+  }));
 
-    window.addEventListener("hashchange", () => routeTo(location.hash.replace("#", "") || "home"));
-    $("#menuBtn")?.addEventListener("click", () => $(".main-nav")?.classList.toggle("open"));
-    $("#themeToggle")?.addEventListener("click", toggleTheme);
-    $("#langToggle")?.addEventListener("click", toggleLanguage);
-    $("#openAuthBtn")?.addEventListener("click", () => openAuth("login"));
-    $("#heroJoinBtn")?.addEventListener("click", () => openAuth("signup"));
-    $("#logoutBtn")?.addEventListener("click", logout);
+  window.addEventListener("hashchange", () => routeTo(location.hash.replace("#", "") || "home"));
+  $("#menuBtn")?.addEventListener("click", () => $(".main-nav")?.classList.toggle("open"));
+  $("#themeToggle")?.addEventListener("click", toggleTheme);
+  $("#langToggle")?.addEventListener("click", toggleLanguage);
+  $("#openAuthBtn")?.addEventListener("click", () => openAuth("login"));
+  $("#heroJoinBtn")?.addEventListener("click", () => openAuth("signup"));
+  $("#logoutBtn")?.addEventListener("click", logout);
 
-    $$("[data-auth-mode]").forEach(button => button.addEventListener("click", () => setAuthMode(button.dataset.authMode)));
-    $("#authForm")?.addEventListener("submit", handleAuthSubmit);
-    $("#resetPasswordBtn")?.addEventListener("click", resetPassword);
+  // ✅ মোডাল ক্লোজ বাটন ফিক্স
+  $("#authModal .close-btn")?.addEventListener("click", () => $("#authModal")?.close());
+  $("#requestModal .close-btn")?.addEventListener("click", () => $("#requestModal")?.close());
 
-    $("#searchTeachersBtn")?.addEventListener("click", loadTeachers);
-    ["#filterSubject", "#filterDistrict", "#filterClass"].forEach(id => $(id)?.addEventListener("input", debounce(loadTeachers, 350)));
-    $("#requestForm")?.addEventListener("submit", submitTeacherRequest);
+  $$("[data-auth-mode]").forEach(button => button.addEventListener("click", () => setAuthMode(button.dataset.authMode)));
+  $("#authForm")?.addEventListener("submit", handleAuthSubmit);
+  $("#resetPasswordBtn")?.addEventListener("click", resetPassword);
 
-    $("#profileForm")?.addEventListener("submit", saveProfile);
-    $("#refreshRequestsBtn")?.addEventListener("click", loadRequests);
-    $$(".side-nav button").forEach(button => button.addEventListener("click", () => switchPanel(button.dataset.panel)));
-    $("#scheduleForm")?.addEventListener("submit", saveSchedule);
-    $("#attendanceForm")?.addEventListener("submit", saveAttendance);
-    $("#materialForm")?.addEventListener("submit", uploadMaterial);
+  $("#searchTeachersBtn")?.addEventListener("click", loadTeachers);
+  ["#filterSubject", "#filterDistrict", "#filterClass"].forEach(id => $(id)?.addEventListener("input", debounce(loadTeachers, 350)));
+  $("#requestForm")?.addEventListener("submit", submitTeacherRequest);
 
-    $("#messageForm")?.addEventListener("submit", sendMessage);
-    $("#loadAdminBtn")?.addEventListener("click", loadAdminDashboard);
-    $("#exportCsvBtn")?.addEventListener("click", exportProfilesCsv);
+  $("#profileForm")?.addEventListener("submit", saveProfile);
+  $("#refreshRequestsBtn")?.addEventListener("click", loadRequests);
+  $$(".side-nav button").forEach(button => button.addEventListener("click", () => switchPanel(button.dataset.panel)));
+  $("#scheduleForm")?.addEventListener("submit", saveSchedule);
+  $("#attendanceForm")?.addEventListener("submit", saveAttendance);
+  $("#materialForm")?.addEventListener("submit", uploadMaterial);
 
-    $("#authModal .close-btn")?.addEventListener("click", () => $("#authModal")?.close());
-    $("#requestModal .close-btn")?.addEventListener("click", () => $("#requestModal")?.close());
-  }
-
+  $("#messageForm")?.addEventListener("submit", sendMessage);
+  $("#loadAdminBtn")?.addEventListener("click", loadAdminDashboard);
+  $("#exportCsvBtn")?.addEventListener("click", exportProfilesCsv);
+}
   async function restoreSession() {
     if (!requireClient(false)) {
       updateAuthUI();
