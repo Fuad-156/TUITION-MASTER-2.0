@@ -12,9 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
+  
+  <!-- ✅ FIXED: Root level path -->
+  <link rel="stylesheet" href="styles.css" />
+  
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script defer src="js/app.js"></script>
+  
+  <!-- ✅ FIXED: Root level path -->
+  <script defer src="app.js"></script>
 </head>
 <body>
   <div class="ambient ambient-one"></div>
@@ -99,7 +104,6 @@
           <p data-i18n="teachersDesc">Filter by subject, district, upazila, and class level.</p>
         </div>
         
-        <!-- Search History -->
         <div class="search-history reveal" id="searchHistory">
           <small data-i18n="recentSearches">Recent:</small>
           <div class="history-chips" id="historyChips"></div>
@@ -137,7 +141,6 @@
 
       <!-- Dashboard Page -->
       <section class="page" id="dashboardPage" data-page="dashboard">
-        <!-- Verification Banner -->
         <div class="verify-banner" id="verifyBanner" hidden>
           <span data-i18n="verifyEmailMsg">Please verify your email to access all features.</span>
           <button class="btn btn-primary btn-sm" id="resendVerifyBtn" data-i18n="resendEmail">Resend Email</button>
@@ -161,7 +164,6 @@
           </aside>
           
           <div class="dashboard-panels reveal delay-1">
-            <!-- Profile Panel -->
             <section class="panel active" id="profilePanel">
               <div class="panel-head">
                 <div>
@@ -197,7 +199,6 @@
               </div>
             </section>
 
-            <!-- Requests Panel -->
             <section class="panel" id="requestsPanel">
               <div class="panel-head">
                 <div>
@@ -209,7 +210,6 @@
               <div class="request-list" id="requestList"></div>
             </section>
 
-            <!-- Schedule Panel -->
             <section class="panel" id="schedulePanel">
               <div class="panel-head">
                 <div><h2 data-i18n="scheduleTitle">Schedule</h2></div>
@@ -228,7 +228,6 @@
               <div class="timeline" id="scheduleList"></div>
             </section>
 
-            <!-- Attendance Panel -->
             <section class="panel" id="attendancePanel">
               <div class="panel-head">
                 <div><h2 data-i18n="attendanceTitle">Attendance</h2></div>
@@ -259,7 +258,6 @@
               </div>
             </section>
 
-            <!-- Materials Panel -->
             <section class="panel" id="materialsPanel">
               <div class="panel-head">
                 <div><h2 data-i18n="materialsTitle">Study Materials</h2></div>
@@ -302,7 +300,6 @@
               </div>
               <button class="btn btn-primary" type="submit" data-i18n="send">Send</button>
             </form>
-            <!-- Voice Recorder UI -->
             <div class="voice-recorder" id="voiceRecorder" hidden>
               <div class="recorder-wave">
                 <span></span><span></span><span></span><span></span><span></span>
@@ -334,7 +331,6 @@
     </main>
   </div>
 
-  <!-- Rating Modal -->
   <dialog class="auth-modal" id="ratingModal">
     <form method="dialog" class="auth-card">
       <button class="close-btn" value="cancel">×</button>
@@ -354,7 +350,6 @@
     </form>
   </dialog>
 
-  <!-- Auth Modal -->
   <dialog class="auth-modal" id="authModal">
     <form method="dialog" class="auth-card" id="authForm">
       <button class="close-btn" value="cancel">×</button>
@@ -380,7 +375,6 @@
     </form>
   </dialog>
 
-  <!-- Request Modal -->
   <dialog class="request-modal" id="requestModal">
     <form method="dialog" class="auth-card" id="requestForm">
       <button class="close-btn" value="cancel">×</button>
@@ -395,16 +389,14 @@
     </form>
   </dialog>
 
-  <!-- Calendar Modal -->
   <dialog id="calendarModal" class="calendar-modal">
     <div id="calendarContent"></div>
     <button class="btn btn-secondary" style="margin-top:16px" onclick="this.closest('dialog').close()" data-i18n="close">Close</button>
   </dialog>
 
-  <!-- Teacher Detail Modal -->
   <dialog class="auth-modal" id="teacherDetailModal">
     <div class="auth-card" id="teacherDetailContent">
-      <button class="close-btn" onclick="$('#teacherDetailModal').close()">×</button>
+      <button class="close-btn" onclick="document.querySelector('#teacherDetailModal').close()">×</button>
       <div id="teacherDetailBody"></div>
     </div>
   </dialog>
