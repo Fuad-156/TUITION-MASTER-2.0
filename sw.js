@@ -1,9 +1,9 @@
-const CACHE_NAME = "tuition-master-v2.0.0";
+const CACHE_NAME = "tuition-master-v2.0.2";  // ⬆️ VERSION BUMPED!
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css",        // ✅ FIXED: No css/ folder
-  "./app.js",            // ✅ FIXED: No js/ folder
+  "./css/styles.css",    // ✅ CORRECT: css/ folder
+  "./js/app.js",         // ✅ CORRECT: js/ folder
   "./manifest.json",
   "./app-config.json",
   "./assets/icon.svg",
