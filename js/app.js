@@ -588,7 +588,7 @@
   // Calendar & Weather
   async function loadTemperature() {
     try{
-      const res=await fetch("https://api.openweathermap.org/data/2.5/weather?q=Dhaka&units=metric&appid=bd5e5f5f5f5f5f5f5f5f5f5f5f5f5f"); // replace with your key
+      const res=await fetch("https://api.openweathermap.org/data/2.5/weather?q=Dhaka&units=metric&appid=276ecb4adfa578bb2b296d44c3d52d17"); // replace with your key
       const data=await res.json();
       if(data.main) document.getElementById("temp").innerText=Math.round(data.main.temp);
     }catch(e){ document.getElementById("temp").innerText="--"; }
