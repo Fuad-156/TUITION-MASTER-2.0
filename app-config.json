@@ -1,0 +1,9 @@
+{
+  "appName": "Tuition Master",
+  "supabaseUrl": "https://YOUR_PROJECT_REF.supabase.co",
+  "supabaseAnonKey": "YOUR_SUPABASE_ANON_PUBLIC_KEY",
+  "adminEmails": ["your-admin-email@example.com"],
+  "bkashNumber": "01XXXXXXXXX",
+  "studentServiceFeeRate": 0.10,
+  "teacherCommissionRate": 0.20
+}
