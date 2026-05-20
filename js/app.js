@@ -113,6 +113,9 @@
     $("#messageForm")?.addEventListener("submit", sendMessage);
     $("#loadAdminBtn")?.addEventListener("click", loadAdminDashboard);
     $("#exportCsvBtn")?.addEventListener("click", exportProfilesCsv);
+
+    $("#authModal .close-btn")?.addEventListener("click", () => $("#authModal")?.close());
+    $("#requestModal .close-btn")?.addEventListener("click", () => $("#requestModal")?.close());
   }
 
   async function restoreSession() {
