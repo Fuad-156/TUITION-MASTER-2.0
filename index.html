@@ -13,19 +13,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
-  <style>
-    /* Additional styles for new features */
-    .admin-tabs { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
-    .weather-widget { background: var(--surface-strong); padding: 6px 12px; border-radius: 40px; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; }
-    .notification-badge { background: var(--danger); color: white; border-radius: 30px; padding: 2px 8px; font-size: 0.7rem; margin-left: 6px; }
-    .calendar-icon { cursor: pointer; }
-    .holiday-tooltip { position: absolute; background: var(--surface-strong); border: 1px solid var(--line); padding: 8px; border-radius: 12px; font-size: 0.75rem; z-index: 100; }
-    .chat-image-preview { max-width: 200px; border-radius: 16px; margin-top: 5px; cursor: pointer; }
-    .message-bubble img { max-width: 100%; border-radius: 12px; margin-top: 6px; }
-    .message-input-area { display: flex; gap: 8px; align-items: center; }
-    .file-attach-btn { background: transparent; border: none; font-size: 1.4rem; cursor: pointer; }
-    @media (max-width: 760px) { .admin-tabs button { flex: 1; } .weather-widget { display: none; } }
-  </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="js/app.js"></script>
 </head>
@@ -37,28 +24,30 @@
       <a class="brand" href="#home" data-route="home" aria-label="Tuition Master Home">
         <span class="brand-mark">TM</span>
         <span>
-          <strong>Tuition Master</strong>
-          <small>Verified tutor network</small>
+          <strong data-i18n="brandName">Tuition Master</strong>
+          <small data-i18n="brandTag">Verified tutor network</small>
         </span>
       </a>
 
       <nav class="main-nav" aria-label="Main navigation">
-        <a href="#home" data-route="home" class="active">Home</a>
-        <a href="#teachers" data-route="teachers">Teachers</a>
-        <a href="#dashboard" data-route="dashboard">Dashboard</a>
-        <a href="#chat" data-route="chat">Chat</a>
-        <a href="#admin" data-route="admin" data-admin-link hidden>Admin</a>
+        <a href="#home" data-route="home" class="active" data-i18n="navHome">Home</a>
+        <a href="#teachers" data-route="teachers" data-i18n="navTeachers">Teachers</a>
+        <a href="#dashboard" data-route="dashboard" data-i18n="navDashboard">Dashboard</a>
+        <a href="#chat" data-route="chat" data-i18n="navChat">Chat</a>
+        <a href="#admin" data-route="admin" data-admin-link hidden data-i18n="navAdmin">Admin</a>
       </nav>
 
       <div class="header-actions">
         <div class="weather-widget" id="weatherWidget">
-          <span>🌡️ <span id="temp">--</span>°C</span>
+          <span>🌡️ <span id="temp">--</span>°C | 💧 <span id="humidity">--</span>% | 🌬️ <span id="wind">--</span> km/h</span>
         </div>
         <button class="icon-btn" id="calendarBtn" title="বাংলা ক্যালেন্ডার">📅</button>
         <button class="icon-btn" id="langToggle" type="button" title="Toggle language">বাংলা</button>
+        <button class="icon-btn" id="numToggle" type="button" title="Toggle Bengali numerals">১২৩</button>
         <button class="icon-btn" id="themeToggle" type="button" title="Toggle theme">☾</button>
-        <button class="btn btn-ghost" id="logoutBtn" type="button" hidden>Logout</button>
-        <button class="btn btn-primary" id="openAuthBtn" type="button">Login / Signup</button>
+        <button class="btn btn-ghost" id="installBtn" type="button" hidden data-i18n="installApp">Install App</button>
+        <button class="btn btn-ghost" id="logoutBtn" type="button" hidden data-i18n="logout">Logout</button>
+        <button class="btn btn-primary" id="openAuthBtn" type="button" data-i18n="loginSignup">Login / Signup</button>
         <button class="menu-btn" id="menuBtn" aria-label="Open menu" type="button"><span></span><span></span><span></span></button>
       </div>
     </header>
@@ -66,105 +55,360 @@
     <main>
       <!-- Home Page -->
       <section class="page page-active hero-page" id="homePage" data-page="home">
-        <!-- same as before – keep your existing hero content -->
         <div class="hero-grid">
           <div class="hero-copy reveal">
-            <span class="eyebrow">Bangladesh’s smart tuition platform</span>
-            <h1>Find verified tutors faster. Manage tuition smarter.</h1>
-            <p>Tuition Master connects students, parents, and qualified teachers through secure profiles, transparent bKash verification, realtime chat, schedules, attendance, and study materials.</p>
+            <span class="eyebrow" data-i18n="heroEyebrow">Bangladesh's smart tuition platform</span>
+            <h1 data-i18n="heroTitle">Find verified tutors faster. Manage tuition smarter.</h1>
+            <p data-i18n="heroDesc">Tuition Master connects students, parents, and qualified teachers through secure profiles, transparent bKash verification, realtime chat, schedules, attendance, and study materials.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary btn-lg" href="#teachers" data-route="teachers">Explore Teachers</a>
-              <button class="btn btn-secondary btn-lg" id="heroJoinBtn" type="button">Join Tuition Master</button>
+              <a class="btn btn-primary btn-lg" href="#teachers" data-route="teachers" data-i18n="exploreTeachers">Explore Teachers</a>
+              <button class="btn btn-secondary btn-lg" id="heroJoinBtn" type="button" data-i18n="joinNow">Join Tuition Master</button>
             </div>
             <div class="metric-row">
-              <div><strong id="metricTeachers">0+</strong><span>Teachers</span></div>
-              <div><strong>10%</strong><span>Student service fee</span></div>
-              <div><strong>20%</strong><span>Teacher commission</span></div>
+              <div><strong id="metricTeachers">0+</strong><span data-i18n="metricTeachers">Teachers</span></div>
+              <div><strong>10%</strong><span data-i18n="metricFee">Student service fee</span></div>
+              <div><strong>20%</strong><span data-i18n="metricCommission">Teacher commission</span></div>
             </div>
           </div>
           <div class="hero-card reveal delay-1">
-            <div class="floating-card top-card"><span class="status-dot"></span><div><strong>Admin verified</strong><small>Trusted tutor profile</small></div></div>
-            <div class="teacher-preview-card"><div class="avatar-ring"><span>TM</span></div><span class="pill success">Premium Match</span><h2>Physics Tutor for HSC</h2><p>Dhaka • 5 years experience • ৳5,000/month</p><div class="mini-tags"><span>Physics</span><span>Math</span><span>HSC</span></div><div class="preview-bar"><span style="width: 86%"></span></div><button class="btn btn-dark full" type="button" data-route="teachers">Request Tutor</button></div>
-            <div class="floating-card bottom-card"><strong>Realtime chat</strong><small>Safe communication before sharing personal contact</small></div>
+            <div class="floating-card top-card"><span class="status-dot"></span><div><strong data-i18n="verifiedBadge">Admin verified</strong><small data-i18n="trustedProfile">Trusted tutor profile</small></div></div>
+            <div class="teacher-preview-card">
+              <div class="avatar-ring"><span>TM</span></div>
+              <span class="pill success" data-i18n="premiumMatch">Premium Match</span>
+              <h2 data-i18n="previewTitle">Physics Tutor for HSC</h2>
+              <p data-i18n="previewDesc">Dhaka • 5 years experience • ৳5,000/month</p>
+              <div class="mini-tags"><span>Physics</span><span>Math</span><span>HSC</span></div>
+              <div class="preview-bar"><span style="width: 86%"></span></div>
+              <button class="btn btn-dark full" type="button" data-route="teachers" data-i18n="requestTutor">Request Tutor</button>
+            </div>
+            <div class="floating-card bottom-card"><strong data-i18n="realtimeChat">Realtime chat</strong><small data-i18n="safeComm">Safe communication before sharing personal contact</small></div>
           </div>
         </div>
         <div class="feature-strip reveal delay-2">
-          <article><span>01</span><h3>Verified Profiles</h3><p>Admin approval keeps teacher data reliable.</p></article>
-          <article><span>02</span><h3>Payment Tracking</h3><p>Manual bKash transaction verification.</p></article>
-          <article><span>03</span><h3>Learning Tools</h3><p>Schedule, attendance, materials, and chat.</p></article>
+          <article><span>01</span><h3 data-i18n="featVerify">Verified Profiles</h3><p data-i18n="featVerifyDesc">Admin approval keeps teacher data reliable.</p></article>
+          <article><span>02</span><h3 data-i18n="featPayment">Payment Tracking</h3><p data-i18n="featPaymentDesc">Manual bKash transaction verification.</p></article>
+          <article><span>03</span><h3 data-i18n="featTools">Learning Tools</h3><p data-i18n="featToolsDesc">Schedule, attendance, materials, and chat.</p></article>
         </div>
       </section>
 
-      <!-- Teachers Page (unchanged, keep as is) -->
+      <!-- Teachers Page -->
       <section class="page" id="teachersPage" data-page="teachers">
-        <div class="section-heading reveal"><span class="eyebrow">Find your best match</span><h2>Search verified teachers</h2><p>Filter by subject, district, upazila, and class level.</p></div>
+        <div class="section-heading reveal">
+          <span class="eyebrow" data-i18n="teachersEyebrow">Find your best match</span>
+          <h2 data-i18n="teachersTitle">Search verified teachers</h2>
+          <p data-i18n="teachersDesc">Filter by subject, district, upazila, and class level.</p>
+        </div>
+        
+        <!-- Search History -->
+        <div class="search-history reveal" id="searchHistory">
+          <small data-i18n="recentSearches">Recent:</small>
+          <div class="history-chips" id="historyChips"></div>
+          <button class="btn btn-ghost btn-sm" id="clearHistoryBtn" data-i18n="clearAll">Clear all</button>
+        </div>
+
         <div class="filter-panel reveal delay-1">
-          <label>Subject<input id="filterSubject" type="search" placeholder="Physics, Math..."/></label>
-          <label>District<input id="filterDistrict" type="search" placeholder="Dhaka, Chattogram..."/></label>
-          <label>Class level<select id="filterClass"><option value="">Any class</option><option>Class 1-5</option><option>Class 6-8</option><option>SSC</option><option>HSC</option><option>Admission</option><option>University</option></select></label>
-          <button class="btn btn-primary" id="searchTeachersBtn" type="button">Search</button>
+          <label><span data-i18n="labelDivision">Division</span>
+            <select id="filterDivision"><option value="" data-i18n="anyDivision">Any division</option></select>
+          </label>
+          <label><span data-i18n="labelDistrict">District</span>
+            <select id="filterDistrict"><option value="" data-i18n="anyDistrict">Any district</option></select>
+          </label>
+          <label><span data-i18n="labelUpazila">Upazila</span>
+            <select id="filterUpazila"><option value="" data-i18n="anyUpazila">Any upazila</option></select>
+          </label>
+          <label><span data-i18n="labelSubject">Subject</span>
+            <input id="filterSubject" type="search" placeholder="Physics, Math..." data-i18n-placeholder="subjectPlaceholder"/>
+          </label>
+          <label><span data-i18n="labelClass">Class level</span>
+            <select id="filterClass">
+              <option value="" data-i18n="anyClass">Any class</option>
+              <option>Class 1-5</option>
+              <option>Class 6-8</option>
+              <option>SSC</option>
+              <option>HSC</option>
+              <option>Admission</option>
+              <option>University</option>
+            </select>
+          </label>
+          <button class="btn btn-primary" id="searchTeachersBtn" type="button" data-i18n="searchBtn">Search</button>
         </div>
         <div class="teacher-grid" id="teacherGrid"></div>
       </section>
 
-      <!-- Dashboard Page (unchanged from your version) -->
+      <!-- Dashboard Page -->
       <section class="page" id="dashboardPage" data-page="dashboard">
+        <!-- Verification Banner -->
+        <div class="verify-banner" id="verifyBanner" hidden>
+          <span data-i18n="verifyEmailMsg">Please verify your email to access all features.</span>
+          <button class="btn btn-primary btn-sm" id="resendVerifyBtn" data-i18n="resendEmail">Resend Email</button>
+        </div>
+
         <div class="dashboard-layout">
-          <aside class="sidebar-card reveal"><div class="profile-summary"><div class="profile-avatar" id="profileAvatar">TM</div><h3 id="profileName">Guest</h3><p id="profileRole">Login to manage your profile</p><span class="pill" id="profileStatus">Not connected</span></div><nav class="side-nav"><button class="active" data-panel="profilePanel">Profile</button><button data-panel="requestsPanel">Requests & Payments</button><button data-panel="schedulePanel">Schedule</button><button data-panel="attendancePanel">Attendance</button><button data-panel="materialsPanel">Materials</button></nav></aside>
+          <aside class="sidebar-card reveal">
+            <div class="profile-summary">
+              <div class="profile-avatar" id="profileAvatar">TM</div>
+              <h3 id="profileName">Guest</h3>
+              <p id="profileRole">Login to manage your profile</p>
+              <span class="pill" id="profileStatus">Not connected</span>
+            </div>
+            <nav class="side-nav">
+              <button class="active" data-panel="profilePanel" data-i18n="navProfile">Profile</button>
+              <button data-panel="requestsPanel" data-i18n="navRequests">Requests & Payments</button>
+              <button data-panel="schedulePanel" data-i18n="navSchedule">Schedule</button>
+              <button data-panel="attendancePanel" data-i18n="navAttendance">Attendance</button>
+              <button data-panel="materialsPanel" data-i18n="navMaterials">Materials</button>
+            </nav>
+          </aside>
+          
           <div class="dashboard-panels reveal delay-1">
-            <section class="panel active" id="profilePanel"><div class="panel-head"><div><h2>My Profile</h2><p>Complete your profile</p></div><span class="pill neutral" id="approvalHint"></span></div><form class="form-grid" id="profileForm"><label>Full name<input name="full_name" required/></label><label>Email<input name="email" type="email" readonly/></label><label>Phone<input name="phone"/></label><label>Role<select name="role"><option value="student">Student</option><option value="teacher">Teacher</option></select></label><label>District<input name="district"/></label><label>Upazila<input name="upazila"/></label><label>Subjects<input name="subjects"/></label><label>Class levels<input name="class_levels"/></label><label>Monthly fee (৳)<input name="fee_monthly" type="number"/></label><label>Experience years<input name="experience_years" type="number"/></label><label class="wide">Qualification<input name="qualification"/></label><label class="wide">Availability<input name="availability"/></label><label class="wide">Bio<textarea name="bio" rows="4"></textarea></label><button class="btn btn-primary wide" type="submit">Save Profile</button></form></section>
-            <section class="panel" id="requestsPanel"><div class="panel-head"><div><h2>Requests & Payments</h2><p>Track tuition requests</p></div><button class="btn btn-secondary" id="refreshRequestsBtn">Refresh</button></div><div class="request-list" id="requestList"></div></section>
-            <section class="panel" id="schedulePanel"><div class="panel-head"><div><h2>Schedule</h2></div></div><form class="form-grid compact" id="scheduleForm"><label class="wide">Title<input name="title" required/></label><label>Start time<input name="start_at" type="datetime-local" required/></label><label>End time<input name="end_at" type="datetime-local" required/></label><label class="wide">Notes<textarea name="notes" rows="3"></textarea></label><button class="btn btn-primary wide" type="submit">Add Schedule</button></form><div class="timeline" id="scheduleList"></div></section>
-            <section class="panel" id="attendancePanel"><div class="panel-head"><div><h2>Attendance</h2></div></div><form class="form-grid compact" id="attendanceForm"><label>Date<input name="class_date" type="date" required/></label><label>Status<select name="status"><option value="present">Present</option><option value="absent">Absent</option><option value="late">Late</option></select></label><label class="wide">Notes<input name="notes"/></label><button class="btn btn-primary wide" type="submit">Save Attendance</button></form><div class="table-wrap"><table><thead><tr><th>Date</th><th>Status</th><th>Notes</th></tr></thead><tbody id="attendanceList"></tbody></table></div></section>
-            <section class="panel" id="materialsPanel"><div class="panel-head"><div><h2>Study Materials</h2></div></div><form class="form-grid compact" id="materialForm"><label>Title<input name="title" required/></label><label>Subject<input name="subject"/></label><label class="wide">File<input name="file" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.txt"/></label><button class="btn btn-primary wide" type="submit">Upload Material</button></form><div class="material-grid" id="materialsList"></div></section>
+            <!-- Profile Panel -->
+            <section class="panel active" id="profilePanel">
+              <div class="panel-head">
+                <div>
+                  <h2 data-i18n="myProfile">My Profile</h2>
+                  <p data-i18n="completeProfile">Complete your profile</p>
+                </div>
+                <span class="pill neutral" id="approvalHint"></span>
+              </div>
+              <form class="form-grid" id="profileForm">
+                <label><span data-i18n="labelFullName">Full name</span><input name="full_name" required/></label>
+                <label><span data-i18n="labelEmail">Email</span><input name="email" type="email" readonly/></label>
+                <label><span data-i18n="labelPhone">Phone</span><input name="phone"/></label>
+                <label><span data-i18n="labelRole">Role</span>
+                  <select name="role">
+                    <option value="student" data-i18n="roleStudent">Student</option>
+                    <option value="teacher" data-i18n="roleTeacher">Teacher</option>
+                  </select>
+                </label>
+                <label><span data-i18n="labelDistrict">District</span><input name="district"/></label>
+                <label><span data-i18n="labelUpazila">Upazila</span><input name="upazila"/></label>
+                <label><span data-i18n="labelSubjects">Subjects</span><input name="subjects"/></label>
+                <label><span data-i18n="labelClassLevels">Class levels</span><input name="class_levels"/></label>
+                <label><span data-i18n="labelFee">Monthly fee (৳)</span><input name="fee_monthly" type="number"/></label>
+                <label><span data-i18n="labelExp">Experience years</span><input name="experience_years" type="number"/></label>
+                <label class="wide"><span data-i18n="labelQualification">Qualification</span><input name="qualification"/></label>
+                <label class="wide"><span data-i18n="labelAvailability">Availability</span><input name="availability"/></label>
+                <label class="wide"><span data-i18n="labelBio">Bio</span><textarea name="bio" rows="4"></textarea></label>
+                <button class="btn btn-primary wide" type="submit" data-i18n="saveProfile">Save Profile</button>
+              </form>
+              <div class="danger-zone">
+                <h4 data-i18n="dangerZone">Danger Zone</h4>
+                <button class="btn btn-danger" id="deleteAccountBtn" data-i18n="deleteAccount">Delete My Account</button>
+              </div>
+            </section>
+
+            <!-- Requests Panel -->
+            <section class="panel" id="requestsPanel">
+              <div class="panel-head">
+                <div>
+                  <h2 data-i18n="requestsTitle">Requests & Payments</h2>
+                  <p data-i18n="requestsDesc">Track tuition requests</p>
+                </div>
+                <button class="btn btn-secondary" id="refreshRequestsBtn" data-i18n="refresh">Refresh</button>
+              </div>
+              <div class="request-list" id="requestList"></div>
+            </section>
+
+            <!-- Schedule Panel -->
+            <section class="panel" id="schedulePanel">
+              <div class="panel-head">
+                <div><h2 data-i18n="scheduleTitle">Schedule</h2></div>
+                <div class="schedule-toggles">
+                  <button class="btn btn-ghost btn-sm active" id="showAllSchedule" data-i18n="showAll">All</button>
+                  <button class="btn btn-ghost btn-sm" id="showTodaySchedule" data-i18n="showToday">Today</button>
+                </div>
+              </div>
+              <form class="form-grid compact" id="scheduleForm">
+                <label class="wide"><span data-i18n="labelTitle">Title</span><input name="title" required/></label>
+                <label><span data-i18n="labelStart">Start time</span><input name="start_at" type="datetime-local" required/></label>
+                <label><span data-i18n="labelEnd">End time</span><input name="end_at" type="datetime-local" required/></label>
+                <label class="wide"><span data-i18n="labelNotes">Notes</span><textarea name="notes" rows="3"></textarea></label>
+                <button class="btn btn-primary wide" type="submit" data-i18n="addSchedule">Add Schedule</button>
+              </form>
+              <div class="timeline" id="scheduleList"></div>
+            </section>
+
+            <!-- Attendance Panel -->
+            <section class="panel" id="attendancePanel">
+              <div class="panel-head">
+                <div><h2 data-i18n="attendanceTitle">Attendance</h2></div>
+                <div class="bulk-actions">
+                  <button class="btn btn-ghost btn-sm" id="bulkPresentBtn" data-i18n="markAllPresent">Mark All Present</button>
+                  <button class="btn btn-ghost btn-sm" id="bulkAbsentBtn" data-i18n="markAllAbsent">Mark All Absent</button>
+                </div>
+              </div>
+              <form class="form-grid compact" id="attendanceForm">
+                <label><span data-i18n="labelDate">Date</span><input name="class_date" type="date" required/></label>
+                <label><span data-i18n="labelStatus">Status</span>
+                  <select name="status">
+                    <option value="present" data-i18n="statusPresent">Present</option>
+                    <option value="absent" data-i18n="statusAbsent">Absent</option>
+                    <option value="late" data-i18n="statusLate">Late</option>
+                  </select>
+                </label>
+                <label class="wide"><span data-i18n="labelNotes">Notes</span><input name="notes"/></label>
+                <button class="btn btn-primary wide" type="submit" data-i18n="saveAttendance">Save Attendance</button>
+              </form>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th data-i18n="thDate">Date</th><th data-i18n="thStatus">Status</th><th data-i18n="thNotes">Notes</th></tr>
+                  </thead>
+                  <tbody id="attendanceList"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <!-- Materials Panel -->
+            <section class="panel" id="materialsPanel">
+              <div class="panel-head">
+                <div><h2 data-i18n="materialsTitle">Study Materials</h2></div>
+              </div>
+              <form class="form-grid compact" id="materialForm">
+                <label><span data-i18n="labelTitle">Title</span><input name="title" required/></label>
+                <label><span data-i18n="labelSubject">Subject</span><input name="subject"/></label>
+                <label class="wide"><span data-i18n="labelFile">File</span><input name="file" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.txt,.mp4,.mp3"/></label>
+                <button class="btn btn-primary wide" type="submit" data-i18n="uploadMaterial">Upload Material</button>
+              </form>
+              <div class="material-grid" id="materialsList"></div>
+            </section>
           </div>
         </div>
       </section>
 
-      <!-- Chat Page (improved with photo upload) -->
+      <!-- Chat Page -->
       <section class="page" id="chatPage" data-page="chat">
-        <div class="section-heading reveal"><span class="eyebrow">Secure communication</span><h2>Realtime tuition chat</h2><p>Send text or images, share notes.</p></div>
+        <div class="section-heading reveal">
+          <span class="eyebrow" data-i18n="chatEyebrow">Secure communication</span>
+          <h2 data-i18n="chatTitle">Realtime tuition chat</h2>
+          <p data-i18n="chatDesc">Send text, images, or voice messages.</p>
+        </div>
         <div class="chat-layout reveal delay-1">
           <aside class="chat-rooms" id="chatRooms"></aside>
           <section class="chat-window">
-            <div class="chat-head"><div><h3 id="chatTitle">Select a request</h3><p id="chatSubtitle">Choose a conversation</p></div></div>
+            <div class="chat-head">
+              <div>
+                <h3 id="chatTitle">Select a request</h3>
+                <p id="chatSubtitle">Choose a conversation</p>
+              </div>
+            </div>
             <div class="messages" id="messagesBox"></div>
             <form class="message-form" id="messageForm">
               <div class="message-input-area">
-                <input id="messageInput" placeholder="Type your message..." autocomplete="off" />
+                <input id="messageInput" placeholder="Type your message..." autocomplete="off" data-i18n-placeholder="typeMessage"/>
                 <button type="button" class="file-attach-btn" id="attachImageBtn" title="Attach Image">📷</button>
+                <button type="button" class="file-attach-btn" id="recordVoiceBtn" title="Record Voice">🎙️</button>
                 <input type="file" id="imageInput" accept="image/*" style="display:none" />
               </div>
-              <button class="btn btn-primary" type="submit">Send</button>
+              <button class="btn btn-primary" type="submit" data-i18n="send">Send</button>
             </form>
+            <!-- Voice Recorder UI -->
+            <div class="voice-recorder" id="voiceRecorder" hidden>
+              <div class="recorder-wave">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span id="recordTimer">00:00</span>
+              <button class="btn btn-danger btn-sm" id="stopRecordBtn" data-i18n="stop">Stop</button>
+            </div>
           </section>
         </div>
       </section>
 
-      <!-- Admin Page (enhanced with all tabs) -->
+      <!-- Admin Page -->
       <section class="page" id="adminPage" data-page="admin">
-        <div class="section-heading reveal"><span class="eyebrow">Control center</span><h2>Admin Dashboard</h2><p>Approve teachers, verify payments, monitor conversations, export data.</p></div>
+        <div class="section-heading reveal">
+          <span class="eyebrow" data-i18n="adminEyebrow">Control center</span>
+          <h2 data-i18n="adminTitle">Admin Dashboard</h2>
+          <p data-i18n="adminDesc">Approve teachers, verify payments, monitor conversations, export data.</p>
+        </div>
         <div class="admin-tabs" id="adminTabs">
-          <button class="btn btn-secondary active" data-admin-tab="pending">Pending Approvals</button>
-          <button class="btn btn-secondary" data-admin-tab="teachers">All Teachers</button>
-          <button class="btn btn-secondary" data-admin-tab="students">All Students</button>
-          <button class="btn btn-secondary" data-admin-tab="sessions">Sessions</button>
-          <button class="btn btn-secondary" data-admin-tab="monitor">Conversation Monitor</button>
-          <button class="btn btn-secondary" data-admin-tab="revenue">Revenue</button>
+          <button class="btn btn-secondary active" data-admin-tab="pending" data-i18n="tabPending">Pending Approvals</button>
+          <button class="btn btn-secondary" data-admin-tab="teachers" data-i18n="tabTeachers">All Teachers</button>
+          <button class="btn btn-secondary" data-admin-tab="students" data-i18n="tabStudents">All Students</button>
+          <button class="btn btn-secondary" data-admin-tab="sessions" data-i18n="tabSessions">Sessions</button>
+          <button class="btn btn-secondary" data-admin-tab="monitor" data-i18n="tabMonitor">Conversation Monitor</button>
+          <button class="btn btn-secondary" data-admin-tab="revenue" data-i18n="tabRevenue">Revenue</button>
         </div>
-        <div id="adminTabContent">
-          <!-- Dynamic content loaded by JS -->
-        </div>
+        <div id="adminTabContent"></div>
       </section>
     </main>
   </div>
 
-  <!-- Modals (unchanged) -->
-  <dialog class="auth-modal" id="authModal"><form method="dialog" class="auth-card" id="authForm"><button class="close-btn" value="cancel">×</button><div class="auth-tabs"><button type="button" class="active" data-auth-mode="login">Login</button><button type="button" data-auth-mode="signup">Signup</button></div><h2 id="authTitle">Welcome back</h2><p id="authSubtitle">Login to manage requests, chat, and profile.</p><label>Email<input name="email" type="email" required/></label><label>Password<input name="password" type="password" required minlength="6"/></label><div class="signup-fields" id="signupFields" hidden><label>Full name<input name="full_name"/></label><label>Role<select name="role"><option value="student">Student</option><option value="teacher">Teacher</option></select></label></div><button class="btn btn-primary full" type="submit" id="authSubmitBtn">Login</button><button class="btn btn-ghost full" type="button" id="resetPasswordBtn">Send password reset email</button></form></dialog>
-  <dialog class="request-modal" id="requestModal"><form method="dialog" class="auth-card" id="requestForm"><button class="close-btn" value="cancel">×</button><h2>Request Teacher</h2><p id="requestTeacherName"></p><input type="hidden" name="teacher_id"/><label>Subject<input name="subject" required/></label><label>Class level<input name="class_level" required/></label><label>Schedule note<textarea name="schedule_note" rows="3"></textarea></label><label>bKash Transaction ID<input name="bkash_trx_id"/></label><button class="btn btn-primary full" type="submit">Submit Request</button></form></dialog>
+  <!-- Rating Modal -->
+  <dialog class="auth-modal" id="ratingModal">
+    <form method="dialog" class="auth-card">
+      <button class="close-btn" value="cancel">×</button>
+      <h2 data-i18n="rateTeacher">Rate Teacher</h2>
+      <p id="ratingTeacherName"></p>
+      <div class="star-rating-input" id="starRatingInput">
+        <button type="button" data-star="1">⭐</button>
+        <button type="button" data-star="2">⭐</button>
+        <button type="button" data-star="3">⭐</button>
+        <button type="button" data-star="4">⭐</button>
+        <button type="button" data-star="5">⭐</button>
+      </div>
+      <input type="hidden" id="ratingValue" value="0"/>
+      <input type="hidden" id="ratingTeacherId" value=""/>
+      <label class="wide"><span data-i18n="labelReview">Review</span><textarea id="ratingReview" rows="3"></textarea></label>
+      <button class="btn btn-primary full" type="button" id="submitRatingBtn" data-i18n="submitRating">Submit Rating</button>
+    </form>
+  </dialog>
+
+  <!-- Auth Modal -->
+  <dialog class="auth-modal" id="authModal">
+    <form method="dialog" class="auth-card" id="authForm">
+      <button class="close-btn" value="cancel">×</button>
+      <div class="auth-tabs">
+        <button type="button" class="active" data-auth-mode="login" data-i18n="login">Login</button>
+        <button type="button" data-auth-mode="signup" data-i18n="signup">Signup</button>
+      </div>
+      <h2 id="authTitle" data-i18n="welcomeBack">Welcome back</h2>
+      <p id="authSubtitle" data-i18n="loginDesc">Login to manage requests.</p>
+      <label><span data-i18n="labelEmail">Email</span><input name="email" type="email" required/></label>
+      <label><span data-i18n="labelPassword">Password</span><input name="password" type="password" required minlength="6"/></label>
+      <div class="signup-fields" id="signupFields" hidden>
+        <label><span data-i18n="labelFullName">Full name</span><input name="full_name"/></label>
+        <label><span data-i18n="labelRole">Role</span>
+          <select name="role">
+            <option value="student" data-i18n="roleStudent">Student</option>
+            <option value="teacher" data-i18n="roleTeacher">Teacher</option>
+          </select>
+        </label>
+      </div>
+      <button class="btn btn-primary full" type="submit" id="authSubmitBtn" data-i18n="loginBtn">Login</button>
+      <button class="btn btn-ghost full" type="button" id="resetPasswordBtn" data-i18n="resetPassword">Send password reset email</button>
+    </form>
+  </dialog>
+
+  <!-- Request Modal -->
+  <dialog class="request-modal" id="requestModal">
+    <form method="dialog" class="auth-card" id="requestForm">
+      <button class="close-btn" value="cancel">×</button>
+      <h2 data-i18n="requestTeacher">Request Teacher</h2>
+      <p id="requestTeacherName"></p>
+      <input type="hidden" name="teacher_id"/>
+      <label><span data-i18n="labelSubject">Subject</span><input name="subject" required/></label>
+      <label><span data-i18n="labelClass">Class level</span><input name="class_level" required/></label>
+      <label><span data-i18n="labelScheduleNote">Schedule note</span><textarea name="schedule_note" rows="3"></textarea></label>
+      <label><span data-i18n="labelBkashTrx">bKash Transaction ID</span><input name="bkash_trx_id"/></label>
+      <button class="btn btn-primary full" type="submit" data-i18n="submitRequest">Submit Request</button>
+    </form>
+  </dialog>
+
+  <!-- Calendar Modal -->
+  <dialog id="calendarModal" class="calendar-modal">
+    <div id="calendarContent"></div>
+    <button class="btn btn-secondary" style="margin-top:16px" onclick="this.closest('dialog').close()" data-i18n="close">Close</button>
+  </dialog>
+
+  <!-- Teacher Detail Modal -->
+  <dialog class="auth-modal" id="teacherDetailModal">
+    <div class="auth-card" id="teacherDetailContent">
+      <button class="close-btn" onclick="$('#teacherDetailModal').close()">×</button>
+      <div id="teacherDetailBody"></div>
+    </div>
+  </dialog>
 
   <div class="toast-zone" id="toastZone"></div>
-  <!-- Calendar Modal -->
-  <dialog id="calendarModal" style="width: 90%; max-width: 500px; border-radius: 28px; background: var(--surface-strong); padding: 20px;"><div id="calendarContent"></div><button class="btn btn-secondary" style="margin-top:16px" onclick="this.closest('dialog').close()">Close</button></dialog>
 </body>
 </html>
