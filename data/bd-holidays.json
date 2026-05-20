@@ -1,12 +1,16 @@
 {
-  "country": "Bangladesh",
-  "note": "Sample holiday data for the Tuition Master UI. Update each year before production use.",
   "year": 2026,
   "holidays": [
-    { "date": "2026-02-21", "name": "International Mother Language Day", "type": "national" },
-    { "date": "2026-03-26", "name": "Independence Day", "type": "national" },
-    { "date": "2026-04-14", "name": "Bengali New Year", "type": "cultural" },
-    { "date": "2026-05-01", "name": "May Day", "type": "national" },
-    { "date": "2026-12-16", "name": "Victory Day", "type": "national" }
+    {"date": "21 February", "name": "International Mother Language Day (Shaheed Dibosh)", "type": "National"},
+    {"date": "17 March", "name": "Sheikh Mujibur Rahman's Birthday", "type": "National"},
+    {"date": "26 March", "name": "Independence Day", "type": "National"},
+    {"date": "14 April", "name": "Pohela Boishakh (Bengali New Year)", "type": "Cultural"},
+    {"date": "1 May", "name": "May Day (Labour Day)", "type": "International"},
+    {"date": "3-5 May", "name": "Eid-ul-Fitr", "type": "Religious"},
+    {"date": "15 August", "name": "National Mourning Day", "type": "National"},
+    {"date": "10-12 July", "name": "Eid-ul-Adha", "type": "Religious"},
+    {"date": "15 October", "name": "Durga Puja (Bijoya Dashami)", "type": "Religious"},
+    {"date": "16 December", "name": "Victory Day", "type": "National"},
+    {"date": "25 December", "name": "Christmas Day", "type": "Religious"}
   ]
 }
