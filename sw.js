@@ -1,4 +1,4 @@
-const CACHE_NAME = "tuition-master-v1.0.0";
+const CACHE_NAME = "tuition-master-v2.0.0";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -8,7 +8,8 @@ const APP_SHELL = [
   "./app-config.json",
   "./assets/icon.svg",
   "./data/app-content.json",
-  "./data/bd-holidays.json"
+  "./data/bd-holidays.json",
+  "./data/bd-locations.json"
 ];
 
 self.addEventListener("install", event => {
