@@ -1,9 +1,9 @@
 {
   "appName": "Tuition Master",
-  "supabaseUrl": "https://YOUR_PROJECT_REF.supabase.co",
-  "supabaseAnonKey": "YOUR_SUPABASE_ANON_PUBLIC_KEY",
-  "adminEmails": ["your-admin-email@example.com"],
-  "bkashNumber": "01XXXXXXXXX",
+  "supabaseUrl": "https://ejsmrureupknqcnzbrpd.supabase.co",
+  "supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVqc21ydXJldXBrbnFjbnpicnBkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTMxMzAsImV4cCI6MjA5NDc4OTEzMH0.LakY-4cdx7H2fELet2wdt6ckeomzQ3ArwiTSTvuzI40",
+  "adminEmails": ["skfuad502@gmail.com"],
+  "bkashNumber": "0151505475",
   "studentServiceFeeRate": 0.10,
   "teacherCommissionRate": 0.20
 }
